@@ -4,27 +4,27 @@ var ctx = canvas.getContext("2d");
 var vidas_jugador = 3;
 var score = 0;
 
-var tank_width = 30;
-var tank_height = 40;
-var tank_speed = 2; //usado para incrementar las coords Y de todos los blocks, seteado a 0.3
+var player_width = 30;
+var player_height = 40;
+var player_speed = 1; //usado para incrementar las coords Y de todos los blocks, la velocidad a la que caen
 
-var tank = new Map();
-tank.set("X", canvas.width / 2);
-tank.set("Y", canvas.height - 70);
-tank.set("width", tank_width);
-tank.set("height", tank_height);
+var player = new Map();
+player.set("X", canvas.width / 2);
+player.set("Y", canvas.height - 70);
+player.set("width", player_width);
+player.set("height", player_height);
 
 var balls = [];
 var ball_speed = 1.6;
 var since_last_fire = performance.now();
 
 var blocks = [];
-var tank_block_collision_bool = true;
+var player_block_collision_bool = true;
 
 var monsters = [];
 var monster_speed = 0.6; //velocidad a la cual se mueven los objetos que caen en el Y axis
 
-//Esta parte maneja el presionar keys usadas para mover el tanque y disparar
+//Esta parte maneja el presionar keys usadas para mover el personaje y disparar
 var right_pressed = false;
 var left_pressed = false;
 var space_pressed = false;
@@ -52,13 +52,13 @@ function KeyUpFunc(e) {
   }
 }
 
-//Dibuja el tanque
-function drawTank() {
+//Dibuja el personaje
+function dibujarplayer() {
   ctx.beginPath();
-  ctx.rect(tank.get("X"), tank.get("Y"), tank_width, tank_height);
+  ctx.rect(player.get("X"), player.get("Y"), player_width, player_height);
   ctx.fillStyle = "green";
 
-  ctx.rect(tank.get("X") + tank_width / 2 - 5, tank.get("Y") - 15, 10, 15);
+  ctx.rect(player.get("X") + player_width / 2 - 5, player.get("Y") - 15, 10, 15);
   ctx.fillStyle = "green";
 
   ctx.fill();
@@ -66,7 +66,7 @@ function drawTank() {
 }
 
 //Dibuja los bloques de bordes
-function drawBorder() {
+function dibujarBorder() {
   ctx.beginPath();
   ctx.rect(0, 0, 80, canvas.height);
   ctx.rect(canvas.width - 80, 0, 80, canvas.height);
@@ -75,8 +75,8 @@ function drawBorder() {
   ctx.closePath();
 }
 
-//Initializing a new ball (starting position), adding it to a list
-function drawNewBall(ball_X, ball_Y) {
+//Inicializa una nueva bola (posicion de inicio), agregandola a una lista
+function dibujarNewBall(ball_X, ball_Y) {
   ctx.beginPath();
   ctx.arc(ball_X, ball_Y, 5, 0, Math.PI * 2);
 
@@ -89,8 +89,8 @@ function drawNewBall(ball_X, ball_Y) {
   since_last_fire = performance.now();
 }
 
-//drawing all of the balls of the list
-function drawBalls() {
+//Dibuja todas las bolas de una lista
+function dibujarBalls() {
   for (var i = 0; i < balls.length; i++) {
     ctx.beginPath();
     ctx.arc(balls[i].get("X"), balls[i].get("Y"), 5, 0, Math.PI * 2);
@@ -100,8 +100,8 @@ function drawBalls() {
   }
 }
 
-//Generates coordinates with 80 < x < (canvas.width - 120) and -260 < y < -60. Returns the coordinates.
-function generateCoords() {
+//Genera coordenadas con 80 < x < (canvas.width - 120) y con -260 < y < -60. Retorna las coordenadas.
+function generarCoords() {
   do {
     var X = Math.random() * (canvas.width - 80) + 80;
   } while (X + 120 > canvas.width);
@@ -110,7 +110,7 @@ function generateCoords() {
   return [X, Y];
 }
 
-//Checks that the distance between TWO blocks is greater than 140 and the difference along the Y-axis is greater than 40
+//Chequea que la distancia X entre 2 bloques is mayor que 140 y la diferencia de la distancia Y-axis mayor que 40.
 function distanceCheck(X1, Y1, X2, Y2) {
   var distance = Math.sqrt(Math.pow(X1 - X2, 2) + Math.pow(Y1 - Y2, 2));
   if (distance > 140 && Math.abs(Y1 - Y2) > 40) {
@@ -120,7 +120,7 @@ function distanceCheck(X1, Y1, X2, Y2) {
   }
 }
 
-//function that returns TRUE if we need to generate new coords because the blocks are too close, FALSE otherwise
+//Funcion que retorna TRUE si necesitamos generar nuevas coordenadas porque los bloques estan muy cercanos, sino es FALSE.
 function blockDistanceChecker(X, Y) {
   if (blocks.length == 0) {
     return false;
@@ -142,10 +142,10 @@ function blockDistanceChecker(X, Y) {
   }
 }
 
-//Creates a new block
-function drawNewBlock() {
+//Crea un nuevo bloque
+function dibujarNewBlock() {
   do {
-    var coords = generateCoords();
+    var coords = generarCoords();
     var X = coords[0];
     var Y = coords[1];
   } while (blockDistanceChecker(X, Y));
@@ -162,7 +162,7 @@ function drawNewBlock() {
   blocks.push(block);
 }
 
-function drawBlocks() {
+function dibujarBlocks() {
   for (var i = 0; i < blocks.length; i++) {
     ctx.beginPath();
     ctx.rect(blocks[i].get("X"), blocks[i].get("Y"), blocks[i].get("width"), blocks[i].get("height"));
@@ -172,10 +172,10 @@ function drawBlocks() {
   }
 }
 
-//Mover function: moves blocks elements down (y++) along the y axis
+//Funcion Mover: mueve los bloques hacia abajo (y++) sobre el Y-axis
 function moverFunc() {
   for (var i = 0; i < blocks.length; i++) {
-    blocks[i].set("Y", blocks[i].get("Y") + tank_speed);
+    blocks[i].set("Y", blocks[i].get("Y") + player_speed);
     //Drops the block from the blocks array when they're out of view
     if (blocks[i].get("Y") > canvas.width) {
       blocks.splice(i, 1);
@@ -183,52 +183,52 @@ function moverFunc() {
   }
 }
 
-//Mover function: moves the balls the balls up (y--) along the y axis //ADDED: Moving the monsters
+//Funcion Mover Bolas: mueve las bolas hacia arriba (y--) sobre el Y-axis //Agregado: Mueve a los monstruos
 function moveBalls() {
-  //Moving the Balls
+  //Mueve las bolas
   for (var i = 0; i < balls.length; i++) {
     balls[i].set("Y", balls[i].get("Y") - ball_speed);
-    //Drops the ball from the balls array when they're out of view
+    //Elimina una bola del array de bolas cuando salen de la vista
     if (balls[i].get("Y") < 0) {
       balls.splice(i, 1);
     }
   }
 
-  //Moving the Monsters
+  //Mueve los monstruos
   for (var j = 0; j < monsters.length; j++) {
     monsters[j].set("Y", monsters[j].get("Y") + monster_speed);
-    //Drops the monsters from the list when they're out of view
+    //Elimina un monstruo del array de monstruos cuando salen de la vista
     if (monsters[j].get("Y") > canvas.width) {
       monsters.splice(j, 1);
     }
   }
 }
 
-//Block Collision detection function
-function tank_block_collision() {
+//Funcion de deteccion de Colision de Bloques
+function player_block_collision() {
 
   for (i = 0; i < blocks.length; i++) {
     var conflict_X = false;
     var conflict_Y = false;
 
-    if (tank.get("X") + tank_width > blocks[i].get("X") && tank.get("X") < blocks[i].get("X") + 40) {
+    if (player.get("X") + player_width > blocks[i].get("X") && player.get("X") < blocks[i].get("X") + 40) {
       conflict_X = conflict_X || true;
     }
-    if (tank.get("Y") < blocks[i].get("Y") + 60 && tank.get("Y") > blocks[i].get("Y")) {
+    if (player.get("Y") < blocks[i].get("Y") + 60 && player.get("Y") > blocks[i].get("Y")) {
       conflict_Y = conflict_Y || true;
     }
     if (conflict_X && conflict_Y) {
-      tank_block_collision_bool = false;
+      player_block_collision_bool = false;
       vidas_jugador -= 1;
       return;
     }
   }
-  tank_block_collision_bool = true;
+  player_block_collision_bool = true;
 }
 
-//Generates X and Y coordinates for a new monster
+//Genera coordenadas X y Y para un nuevo monstruo
 function create_monster() {
-  var coords = generateCoords();
+  var coords = generarCoords();
   var X = coords[0];
   var Y = coords[1];
 
@@ -240,19 +240,19 @@ function create_monster() {
   monsters.push(monster);
 }
 
-//Draws a monster
-function draw_monster(X, Y) {
+//Dibuja un monstruo
+function dibujar_monster(X, Y) {
   var scale = 0.8;
   var h = 9; //height
   var a = 5;
 
   ctx.beginPath();
-  //First trapezoid
+  //Primer trapezoide
   ctx.moveTo(X, Y);
   ctx.lineTo(X - a * scale, Y + h * scale);
   ctx.lineTo(X + (a * 4) * scale, Y + h * scale);
   ctx.lineTo(X + (a * 3) * scale, Y);
-  //Second trapezoid
+  //Segundo trapezoide
   ctx.moveTo(X - (a + 5) * scale, Y + h * scale);
   ctx.lineTo(X - (a) * scale, Y + (h + 20) * scale);
   ctx.lineTo(X + (a + 15) * scale, Y + (h + 20) * scale);
@@ -263,16 +263,16 @@ function draw_monster(X, Y) {
   ctx.closePath();
 }
 
-//Draws all monsters in the monsters list
-function draw_monsters() {
+//Dibuja al monstruo en la lista de monstruos
+function dibujar_monsters() {
   for (i = 0; i < monsters.length; i++) {
     var X = monsters[i].get("X");
     var Y = monsters[i].get("Y");
-    draw_monster(X, Y);
+    dibujar_monster(X, Y);
   }
 }
 
-//Collision detector: detects a collision along the Y-axis between two objects (Maps) with the following template: ["X", "Y", "width", "height"]
+//Detector de Colision: detecta una colision sobre la Y-axis entre 2 objetos (Maps) con la siguiente plantilla: ["X", "Y", "width", "height"]
 function collision_detector(first, second) {
   var x1 = first.get("X");
   var y1 = first.get("Y");
@@ -292,7 +292,7 @@ function collision_detector(first, second) {
   }
 }
 
-//detects a collion betweenn balls and monsters
+//Detecta una colision entre bolas y monstruos
 function ball_monster_collision() {
   for (var i = 0; i < monsters.length; i++) {
     var monster = monsters[i];
@@ -307,50 +307,51 @@ function ball_monster_collision() {
   }
 }
 
-//Used to display the number of lives remaining and game score
-function drawInfo() {
+//Usado para mostrar el numero de vidas restantes y el score del juego
+function dibujarInfo() {
   ctx.font = "bold 15px Gill Sans MT";
   ctx.fillStyle = "blue";
   ctx.fillText("Lives: " + vidas_jugador, 635, 22);
   ctx.fillText("Score: " + score, 13, 22)
 }
 
-//Main function, will be used to run the game
-function draw() {
+//Funcion Principal, sera usada para correr el juego
+function dibujar() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  drawBorder();
-  drawInfo();
-  drawTank();
-  drawBalls();
-  drawBlocks();
-  draw_monsters();
+  dibujarBorder();
+  dibujarInfo();
+  dibujarplayer();
+  dibujarBalls();
+  dibujarBlocks();
+  dibujar_monsters();
   moveBalls();
-  tank_block_collision();
+  player_block_collision();
   ball_monster_collision();
   moverFunc();
 
   if (space_pressed && balls.length < 10 && performance.now() - since_last_fire > 500) {
-    drawNewBall(tank.get("X") + 15, tank.get("Y") - 30);
+    dibujarNewBall(player.get("X") + 15, player.get("Y") - 30);
   }
-  if (right_pressed && tank.get("X") + tank_width < canvas.width) {
-    tank.set("X", tank.get("X") + 1);
+  if (right_pressed && player.get("X") + player_width < canvas.width) {
+    player.set("X", player.get("X") + 1);
   }
-  if (left_pressed && tank.get("X") > 0) {
-    tank.set("X", tank.get("X") - 1);
+  if (left_pressed && player.get("X") > 0) {
+    player.set("X", player.get("X") - 1);
   }
 
   if (blocks.length < 3) {
-    drawNewBlock();
+    dibujarNewBlock();
   }
   if (monsters.length < 1) {
     create_monster();
   }
-  if (!tank_block_collision_bool && vidas_jugador < 0) {
+  if (!player_block_collision_bool && vidas_jugador < 0) {
      alert("You lost");
      document.location.reload()
   }
 
-  requestAnimationFrame(draw);
+  requestAnimationFrame(dibujar);
 }
 
-draw();
+//Ejecuta el Juego.
+dibujar();
