@@ -1,0 +1,222 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body, html {
+    height: 100%;
+    overflow: hidden;
+}
+
+footer, section, header, aside, figure {
+    display: block;
+}
+
+li {
+    list-style: none;
+}
+
+#container {
+    background-color: yellow;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.playing #container {
+    cursor: none;
+}
+
+body {
+    font-size: 20px;
+    font-family: "Patua One", calibri, arial, sans-serif;
+    background: #000;
+}
+
+#characters {
+    font-size: 15px;
+}
+
+h1 {
+    font-size: 30px;
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+#container {
+    background: white;
+    outline: 0;
+}
+
+#intro h1 span {
+    text-indent: -2000px;
+    height: 130px;
+    display: block;
+}
+
+#gameover h1 {
+    padding-top: 150px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+#intro ul, #intro p, #gameover p {
+    width: 80%;
+    margin: 10px auto;
+}
+
+#intro p {
+    font-size: 16px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+#intro h1 {
+    text-align: center;
+    font-size: 30px;
+    text-transform: uppercase;
+}
+
+#intro button, #gameover button, #characters button {
+    display: block;
+    width: 100%;
+    font-family: "Patua One", calibri, arial, sans-serif;
+    margin: 20px 0;
+    font-size: 20px;
+    line-height: 30px;
+    border: none;
+    background: #e6f0a3;
+    box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.7);
+    border-radius: 5px;
+}
+
+#intro button:hover, #intro button:focus, #gameover button:hover, #gameover button:focus {
+    box-shadow: 0 6px 5px -5px rgba(0, 0, 0, 0.7);
+}
+
+#player {
+    display: block;
+    margin: 5px auto;
+}
+
+.sprite {
+    width: 45px;
+    height: 60px;
+}
+
+.right, .left {
+    z-index: 10;
+    line-height: 50px;
+    width: 50px;
+    border: none;
+    border-radius: 5px;
+    font-size: 25px;
+    background: #9dd53a;
+}
+
+@media screen and (min-device-width: 700px) {
+    #container {
+      width: 40%;
+      min-width: 500px;
+      height: 90%;
+      margin: 0 auto;
+    }
+  }
+  
+  #playfield, #gameover, #instructions, #intro {
+    position: absolute;
+    top: -900px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    -webkit-transition: top 1s;
+    -moz-transition: top 1s;
+    -ms-transition: top 1s;
+    -o-transition: top 1s;
+    transition: top 1s;
+  }
+  
+  #playfield.current, #gameover.current, #instructions.current, #intro.current {
+    top: 0;
+    -webkit-transition: top 1s;
+    -moz-transition: top 1s;
+    -ms-transition: top 1s;
+    -o-transition: top 1s;
+    transition: top 1s;
+  }
+  
+  #characters li.introdeck {
+    opacity: 0;
+    left: -9000px;
+    position: absolute;
+    -webkit-transition: opacity 1s;
+    -moz-transition: opacity 1s;
+    -ms-transition: opacity 1s;
+    -o-transition: opacity 1s;
+    transition: opacity 1s;
+  }
+  
+  #characters .current, #characters .introdeck {
+    width: 80%;
+    margin: 5px auto;
+  }
+  
+  #characters .current ul {
+    margin: 5px 0;
+  }
+  
+  #characters .current li {
+    display: inline;
+    padding-right: 10px;
+  }
+  
+  #characters li.current {
+    opacity: 1;
+    left: 0;
+    -webkit-transition: opacity 1s;
+    -moz-transition: opacity 1s;
+    -ms-transition: opacity 1s;
+    -o-transition: opacity 1s;
+    transition: opacity 1s;
+  }
+  
+  .right {
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 20px;
+  }
+  
+  .left {
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: 20px;
+  }
+  
+  canvas {
+    width: 100%;
+    height: 100%;
+  }
+  
+  #scoresinfo {
+    position: absolute;
+    width: 100%;
+    padding: 5px 0;
+    background: rgb(76, 76, 76);
+  }
+  
+  #energy, #score {
+    position: relative;
+    color: #fff;
+    padding-left: 20px;
+  }
+  
+  #energy output, #score output {
+    position: absolute;
+    right: 20px;
+  }
