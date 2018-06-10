@@ -13,7 +13,7 @@ body, html {
 
 #contenedor {
     background-image: url("Assets/1.png");
-    background-size: cover;
+    background-position: top;
     position: relative;
     height: 100%;
     width: 100%;
@@ -146,44 +146,15 @@ canvas {
     right: 20px;
 }
 
-/* Backgrounds que van a cambiar en transición dentro del juego (EN PROCESO) */
-/* 
-@keyframes cambiabackground {
-    0% {
-        background-image: url("Assets/1.png");
-    }
-    12.5% {
-        background-image: url("Assets/2.png");
-    }
-    25% {
-        background-image: url("Assets/3.png");
-    }
-    37.5% {
-        background-image: url("Assets/4.png");
-    }
-    50% {
-        background-image: url("Assets/5.png");
-    }
-    62.5% {
-        background-image: url("Assets/6.png");
-    }
-    75% {
-        background-image: url("Assets/7.png");
-    }
-    87.5% {
-        background-image: url("Assets/8.png")
-    }
-    100% {
-        background-image: url("Assets/1.png");
-    }
-}
-
 #cambiabackground {
+    background-image: url("Assets/1.png");
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
     background-size: cover;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    animation: cambiabackground 120s linear infinite 0s;
-    transition: background-image .6s ease-in-out;
-} */
+    -webkit-transition: background 1s ease-in-out;
+    -moz-transition: background 1s ease-in-out;
+    -o-transition: background 1s ease-in-out;
+    -ms-transition: background 1s ease-in-out;
+    transition: background 1s ease-in-out;
+}
