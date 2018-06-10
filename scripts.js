@@ -1,6 +1,8 @@
 (function () {
 
-    /* DOM elements */
+    /*
+    Elementos del DOM
+    */
     var contenedor = $('#contenedor'),
         field = $('#juego'),
         player = $('#jugador'),
@@ -17,25 +19,31 @@
         c = canvas.getContext('2d'),
         startenergy = +energydisplay.innerHTML;
 
-    /* Game data */
+    /*
+    Datos del Juego
+    */
     var scores = {
         energy: startenergy
     },
         playerincrease = +player.getAttribute('data-increase');
 
-    /* counters, etc */
+    /*
+    Contadores
+    */
     var score = 0, gamestate = null, x = 0, sprites = [], allsprites = [],
         spritecount = 0, now = 0, old = null, playerY = 0, offset = 0,
         width = 0, height = 0, levelincrease = 0, i = 0, storedscores = null,
         initsprites = 0, newsprite = 500, rightdown = false, leftdown = false;
     /*
-    Setting up the game
+    Configuracion del juego
     */
 
     function init() {
         var current, sprdata, informacionpuntaje, i, j;
 
-        /* retrieve sprite data from HTML */
+        /*
+        Trae el Sprite del HTML
+        */
         sprdata = document.querySelectorAll('img.sprite');
         i = sprdata.length;
         while (i--) {
@@ -59,11 +67,15 @@
         initsprites = +$('#personajes').getAttribute('data-countstart');
         newsprite = +$('#personajes').getAttribute('data-newsprite');
 
-        /* make game keyboard enabled */
+        /*
+        Habilita el teclado en el juego
+        */
         contenedor.tabIndex = -1;
         contenedor.focus();
 
-        /* Assign event handlers */
+        /*
+        Asigna Manejadores de Eventos
+        */
         contenedor.addEventListener('keydown', onkeydown, false);
         contenedor.addEventListener('keyup', onkeyup, false);
         contenedor.addEventListener('touchstart', ontouchstart, false);
@@ -72,7 +84,9 @@
         contenedor.addEventListener('mousemove', onmousemove, false);
         window.addEventListener('deviceorientation', tilt, false);
 
-        /* Get the game score, or preset it when there isn't any */
+        /*
+        Trae el Score del juego o lo resetea si no hay ninguno
+        */
         if (localStorage.html5catcher) {
             storedscores = JSON.parse(localStorage.html5catcher);
         } else {
@@ -80,7 +94,9 @@
             localStorage.html5catcher = JSON.stringify(storedscores);
         }
 
-        /* show the intro */
+        /*
+        Muestra la introduccion
+        */
         showintro();
 
     };
@@ -104,7 +120,9 @@
 
     /* Event Handlers */
 
-    /* Click handling */
+    /*
+    Manejo de Clicks
+    */
     function onclick(ev) {
         var t = ev.target;
         if (gamestate === 'gameover') {
@@ -117,7 +135,9 @@
         ev.preventDefault();
     }
 
-    /* Keyboard handling */
+    /*
+    Manejo de Teclado
+    */
     function onkeydown(ev) {
         if (ev.keyCode === 39) { rightdown = true; }
         else if (ev.keyCode === 37) { leftdown = true; }
@@ -127,7 +147,9 @@
         else if (ev.keyCode === 37) { leftdown = false; }
     }
 
-    /* Touch handling */
+    /*
+    Manejo de Touch Screen
+    */
     function ontouchstart(ev) {
         if (gamestate === 'playing') { ev.preventDefault(); }
         // if (ev.target === rightbutton) { rightdown = true; }
@@ -139,7 +161,9 @@
         // else if (ev.target === leftbutton) { leftdown = false; }
     }
 
-    /* Orientation handling */
+    /*
+    Manejo de Orientacion
+    */
     function tilt(ev) {
         if (ev.gamma < 0) { x = x - 2; }
         if (ev.gamma > 0) { x = x + 2; }
@@ -147,7 +171,9 @@
         if (x > width - offset) { x = width - offset; }
     }
 
-    /* Mouse handling */
+    /*
+    Manejo del Mouse
+    */
     function onmousemove(ev) {
         var mx = ev.clientX - contenedor.offsetLeft;
         if (mx < offset) { mx = offset; }
@@ -156,7 +182,7 @@
     }
 
     /*
-    Introduction
+    Introduccion
     */
     function showintro() {
         setcurrent(principal);
@@ -167,7 +193,7 @@
     }
 
     /*
-    Instructions
+    Instrucciones
     */
     function showinstructions() {
         setcurrent(instrucciones);
@@ -176,14 +202,18 @@
         characters[now].className = 'current';
     }
 
-    /* action when left is activated */
+    /*
+    Accion cuando se activa Izquierda
+    */
     function instructionsdone() {
         characters[now].className = 'dentrointrucciones';
         now = 0;
         showintro();
     }
 
-    /* action when right is activated */
+    /*
+    Accion cuando se activa Derecha
+    */
     function instructionsnext() {
         if (characters[now + 1]) {
             now = now + 1;
@@ -195,7 +225,7 @@
     }
 
     /*
-    Start the game
+    Comienza el Juego
     */
     function startgame() {
         setcurrent(field);
@@ -220,30 +250,38 @@
     }
 
     /*
-    The main game loop
+    Bucle Pricipal del Juego
     */
     function loop() {
         c.clearRect(0, 0, width, height);
 
-        /* render and update sprites */
+        /*
+        Renderiza y actualiza Sprites
+        */
         j = sprites.length;
         for (i = 0; i < j; i++) {
             sprites[i].render();
             sprites[i].update();
         }
 
-        /* show scores */
+        /*
+        Muestra Scores
+        */
         energydisplay.innerHTML = scores.energy;
         scoredisplay.innerHTML = ~~(score / 10);
         score++;
 
-        /* with increasing score, add more sprites */
+        /*
+        Cuando aumenta Score agrega mas Sprites
+        */
         if (~~(score / newsprite) > levelincrease) {
             sprites.push(addsprite());
             levelincrease++;
         }
 
-        /* position player*/
+        /*
+        Posicion Jugador
+        */
         if (rightdown) { playerright(); }
         if (leftdown) { playerleft(); }
 
@@ -252,7 +290,9 @@
         c.drawImage(player, 0, 0);
         c.restore();
 
-        /* when you still have energy, render next, else game over */
+        /*
+          Cuando aun tienes energia, renderiza next, sino gameover
+         */
         scores.energy = Math.min(scores.energy, 100);
         if (scores.energy > 0) {
             requestAnimationFrame(loop);
@@ -262,21 +302,25 @@
 
     };
 
-    /* action when left is activated */
+    /*
+    Accion cuando se activa la izquierda
+    */
     function playerleft() {
         x -= playerincrease;
         if (x < offset) { x = offset; }
     }
 
-    /* action when left is activated */
+    /*
+    Accion cuando se activa la derecha
+    */
     function playerright() {
         x += playerincrease;
         if (x > width - offset) { x = width - offset; }
     }
 
     /*
-Game over
-*/
+    Game over
+    */
     function gameover() {
         document.body.className = 'gameover';
         setcurrent(over);
@@ -292,10 +336,12 @@ Game over
     }
 
     /*
-    Helper methods
+    Metodos de Ayuda
     */
 
-    /* Particle system */
+    /*
+    Sistema de Particulas
+    */
     function sprite() {
         this.px = 0;
         this.py = 0;
@@ -360,24 +406,32 @@ Game over
         sprite.vy = rand(1, 5);
     };
 
-    /* yeah, yeah... */
+    /*
+    Seleccionador de Query
+    */
     function $(str) {
         return document.querySelector(str);
     };
 
-    /* Get a random number between min and max */
+    /*
+    Obtiene numero random entre un minimo y maximo
+    */
     function rand(min, max) {
         return ((Math.random() * (max - min)) + min);
     };
 
-    /* Show the current part of the game and hide the old one */
+    /*
+    Muestra parte actual del juego y oculta la anterior
+    */
     function setcurrent(elm) {
         if (old) { old.className = ''; }
         elm.className = 'current';
         old = elm;
     };
 
-    /* Detect and set requestAnimationFrame */
+    /*
+    Detecta y Setea requestAnimationFrame
+    */
     if (!window.requestAnimationFrame) {
         window.requestAnimationFrame = (function () {
             return window.webkitRequestAnimationFrame ||
@@ -390,6 +444,8 @@ Game over
         })();
     }
 
-    /* off to the races */
+    /*
+    Ejecutar
+    */
     init();
 })();
