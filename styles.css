@@ -4,52 +4,60 @@
 }
 
 body, html {
+    background: #fff;
     height: 100%;
-    overflow: hidden;
     font-size: 1.2em;
     font-family: Verdana, Tahoma, sans-serif;
-    background: #000;
+    overflow: hidden;
 }
 
 #contenedor {
-    background-color: #f4f1e0;
-    outline: 0;
-    width: 100%;
-    height: 100%;
+    background-image: url("Assets/1.png");
+    background-size: cover;
     position: relative;
+    height: 100%;
+    width: 100%;
+    outline: 0;
     overflow: hidden;
 }
 
 .pantallamenu {
-    margin-top: 50px;
     display: flex;
+    margin-top: 75px;
     flex-direction: column;
-    justify-content: center;
     text-align: center;
+    justify-content: center;
 }
 
 .pantallamenu div {
-    margin: 20px 0px;
     display: flex;
+    margin: 25px 0px;
     align-items: center;
     justify-content: center;
 }
 
 .pantallamenu .titulo {
     font-size: 1.2em;
+    font-weight: 500;
 }
 
 .pantallamenu .grantitulo {
-    font-size: 1.6em;
+    display: flex;
+    flex-direction: column;
+}
+
+.pantallamenu .grantitulo span {
+    font-size: 1.8em;
+    font-weight: 800;
 }
 
 .pantallamenu .puntaje {
-    flex-direction: column;
     background-color: #f14c38;
+    padding: 10px 0px;
     color: #f4f1e0;
     border: 2px solid;
-    border-color: black;
-    padding: 10px 0px;
+    border-color: #f4f1e0;
+    flex-direction: column;
 }
 
 .pantallamenu .imagenes img {
@@ -61,121 +69,58 @@ body, html {
 }
 
 .pantallamenu .botones button {
-    width: 400px;
-    font-size: 1.2em;
     background: white;
-    margin: 5px 0px;
+    width: 400px;
+    font-size: 1.1em;
+    margin-bottom: 10px;
+    padding: 7px 0px;
 }
 
-#playfield, #gameover, #instrucciones, #principal {
+/* Agregar efecto al colocar cursor sobre botones */
+
+.pantallamenu .botones button:hover {
+    font-weight: 600;
+    cursor: pointer;
+}
+
+#juego, #juegoterminado, #instrucciones, #principal {
     position: absolute;
-    top: -900px;
-    left: 0;
     width: 100%;
     height: 100%;
-    -webkit-transition: top 1s;
-    -moz-transition: top 1s;
-    -ms-transition: top 1s;
-    -o-transition: top 1s;
+    bottom: -900px;
     transition: top 1s;
 }
 
-#playfield.current, #gameover.current, #instrucciones.current, #principal.current {
-    top: 0;
-    -webkit-transition: top 1s;
-    -moz-transition: top 1s;
-    -ms-transition: top 1s;
-    -o-transition: top 1s;
-    transition: top 1s;
+#juego.current, #juegoterminado.current, #instrucciones.current, #principal.current {
+    bottom: 0;
+    transition: bottom 1s;
 }
 
-footer, section, header, aside, figure {
+section {
     display: block;
 }
-
-/* #contenedorjuego {
-    background: url("Assets/background.png");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 100%;
-} */
 
 /* Para que no aparezca el cursor del mouse dentro del juego */
 
-.playing #contenedor {
+#juego {
     cursor: none;
 }
 
-/* body {
-    font-size: 20px;
-    font-family: "Patua One", calibri, arial, sans-serif;
-    background: #000;
-} */
-
-#characters {
-    /* font-size: 15px; */
-}
-
-
-/* Efecto hover en botones */
-
-/* #principal button:hover, #principal button:focus, #gameover button:hover, #gameover button:focus {
-    box-shadow: 0 6px 5px -5px rgba(0, 0, 0, 0.7);
-} */
-
-#player {
+#jugador {
     display: block;
     margin: 5px auto;
-    padding-bottom: -10px;
 }
 
-#characters div.dentrointrucciones {
-    opacity: 0;
-    left: -9000px;
+#personajes div.dentrointrucciones {
     position: absolute;
-    -webkit-transition: opacity 1s;
-    -moz-transition: opacity 1s;
-    -ms-transition: opacity 1s;
-    -o-transition: opacity 1s;
+    left: -9000px;
+    opacity: 0;
     transition: opacity 1s;
 }
 
-#characters.current, #characters.dentrointrucciones {
+#personajes.current, #personajes.dentrointrucciones {
     width: 80%;
     margin: 5px auto;
-}
-
-#characters.current ul {
-    margin: 5px 0;
-}
-
-#characters.current li {
-    display: inline;
-    padding-right: 10px;
-}
-
-#characters li.current {
-    opacity: 1;
-    left: 0;
-    -webkit-transition: opacity 1s;
-    -moz-transition: opacity 1s;
-    -ms-transition: opacity 1s;
-    -o-transition: opacity 1s;
-    transition: opacity 1s;
-}
-
-.right {
-    display: block;
-    position: absolute;
-    right: 0;
-    bottom: 20px;
-}
-
-.left {
-    display: block;
-    position: absolute;
-    left: 0;
-    bottom: 20px;
 }
 
 canvas {
@@ -183,20 +128,62 @@ canvas {
     height: 100%;
 }
 
-#scoresinfo {
+#puntajeinfo {
+    background: grey;
     position: absolute;
     width: 100%;
     padding: 5px 0;
-    background: rgb(76, 76, 76);
 }
 
-#energy, #score {
+#dulzura, #puntaje {
     position: relative;
-    color: #fff;
     padding-left: 20px;
+    color: #fff;
 }
 
-#energy output, #score output {
+#dulzura output, #puntaje output {
     position: absolute;
     right: 20px;
 }
+
+/* Backgrounds que van a cambiar en transición dentro del juego (EN PROCESO) */
+/* 
+@keyframes cambiabackground {
+    0% {
+        background-image: url("Assets/1.png");
+    }
+    12.5% {
+        background-image: url("Assets/2.png");
+    }
+    25% {
+        background-image: url("Assets/3.png");
+    }
+    37.5% {
+        background-image: url("Assets/4.png");
+    }
+    50% {
+        background-image: url("Assets/5.png");
+    }
+    62.5% {
+        background-image: url("Assets/6.png");
+    }
+    75% {
+        background-image: url("Assets/7.png");
+    }
+    87.5% {
+        background-image: url("Assets/8.png")
+    }
+    100% {
+        background-image: url("Assets/1.png");
+    }
+}
+
+#cambiabackground {
+    background-size: cover;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    animation: cambiabackground 120s linear infinite 0s;
+    transition: background-image .6s ease-in-out;
+} */

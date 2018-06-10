@@ -2,17 +2,17 @@
 
     /* DOM elements */
     var contenedor = $('#contenedor'),
-        field = $('#playfield'),
-        player = $('#player'),
+        field = $('#juego'),
+        player = $('#jugador'),
         principal = $('#principal'),
         instrucciones = $('#instrucciones'),
-        leftbutton = $('.left'),
-        rightbutton = $('.right'),
-        scoredisplay = $('#score output'),
-        energydisplay = $('#energy output'),
+        // leftbutton = $('.left'),
+        // rightbutton = $('.right'),
+        scoredisplay = $('#puntaje output'),
+        energydisplay = $('#dulzura output'),
         canvas = $('canvas'),
-        over = $('#gameover'),
-        overmsg = over.querySelector( '.message' ),
+        over = $('#juegoterminado'),
+        overmsg = over.querySelector('.mensaje'),
         characters = document.querySelectorAll('div.dentrointrucciones'),
         c = canvas.getContext('2d'),
         startenergy = +energydisplay.innerHTML;
@@ -56,8 +56,8 @@
             allsprites.push(current);
         }
         spritecount = allsprites.length;
-        initsprites = +$('#characters').getAttribute('data-countstart');
-        newsprite = +$('#characters').getAttribute('data-newsprite');
+        initsprites = +$('#personajes').getAttribute('data-countstart');
+        newsprite = +$('#personajes').getAttribute('data-newsprite');
 
         /* make game keyboard enabled */
         contenedor.tabIndex = -1;
@@ -91,9 +91,9 @@
     function onclick(ev) {
         var t = ev.target;
         if (gamestate === 'gameover') {
-            if (t.id === 'replay') { showintro(); }
+            if (t.id === 'jugardenuevo') { showintro(); }
         }
-        if (t.className === 'next') { instructionsnext(); }
+        if (t.className === 'proximo') { instructionsnext(); }
         if (t.className === 'endinstructions') { instructionsdone(); }
         if (t.id === 'botoninstrucciones') { showinstructions(); }
         if (t.id === 'botonjugar') { startgame(); }
@@ -113,13 +113,13 @@
     /* Touch handling */
     function ontouchstart(ev) {
         if (gamestate === 'playing') { ev.preventDefault(); }
-        if (ev.target === rightbutton) { rightdown = true; }
-        else if (ev.target === leftbutton) { leftdown = true; }
+        // if (ev.target === rightbutton) { rightdown = true; }
+        // else if (ev.target === leftbutton) { leftdown = true; }
     }
     function ontouchend(ev) {
         if (gamestate === 'playing') { ev.preventDefault(); }
-        if (ev.target === rightbutton) { rightdown = false; }
-        else if (ev.target === leftbutton) { leftdown = false; }
+        // if (ev.target === rightbutton) { rightdown = false; }
+        // else if (ev.target === leftbutton) { leftdown = false; }
     }
 
     /* Orientation handling */
