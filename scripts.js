@@ -29,22 +29,22 @@
     Contadores
     */
     var score = 0,
-    estadoDelJuego = null,
-    x = 0,
-    sprites = [],
-    listaSprites = [],
-    contadorSprite = 0,
-    now = 0,
-    viejo = null,
-    playerY = 0,
-    offset = 0,
-    width = 0, height = 0,
-    levelincrease = 0, i = 0,
-    scoresGuardados = null,
-    initsprites = 0,
-    nuevoSprite = 500,
-    rightdown = false,
-    leftdown = false;
+        estadoDelJuego = null,
+        x = 0,
+        sprites = [],
+        listaSprites = [],
+        contadorSprite = 0,
+        now = 0,
+        viejo = null,
+        playerY = 0,
+        offset = 0,
+        width = 0, height = 0,
+        levelincrease = 0, i = 0,
+        scoresGuardados = null,
+        initsprites = 0,
+        nuevoSprite = 500,
+        rightdown = false,
+        leftdown = false;
     /*
     Configuracion del juego
     */
@@ -57,8 +57,7 @@
         */
         sprdata = document.querySelectorAll('img.sprite');
         i = sprdata.length;
-        while (i--)
-        {
+        while (i--) {
             actual = {};
             actual.effects = [];
             actual.img = sprdata[i];
@@ -99,15 +98,8 @@
         /*
         Trae el Score del juego o lo resetea si no hay ninguno
         */
-        if (localStorage.html5catcher)
-        {
-            scoresGuardados = JSON.parse(localStorage.html5catcher);
-        }
-        else
-        {
-            scoresGuardados = { last: 0, high: 0 };
-            localStorage.html5catcher = JSON.stringify(scoresGuardados);
-        }
+        scoresGuardados = { last: 0, high: 0 };
+        localStorage.html5catcher = JSON.stringify(scoresGuardados);
 
         /*
         Muestra la introduccion
@@ -120,7 +112,7 @@
     Función para cambiar el background durante el juego
     */
 
-    function cambiaBackground(){
+    function cambiaBackground() {
         var images = ['Assets/2.png', 'Assets/3.png', 'Assets/4.png', 'Assets/5.png', 'Assets/6.png', 'Assets/7.png', 'Assets/8.png']
 
         setInterval(function () {
@@ -140,28 +132,23 @@
     */
     function onclick(ev) {
         var t = ev.target;
-        if (estadoDelJuego === 'gameover')
-        {
+        if (estadoDelJuego === 'gameover') {
             if (t.id === 'jugardenuevo') {
                 showintro();
             }
         }
-        if (t.className === 'proximo')
-        {
+        if (t.className === 'proximo') {
             instruccionesSiguiente();
         }
-        if (t.className === 'endinstructions')
-        {
+        if (t.className === 'endinstructions') {
             instruccionesListo();
         }
-        if (t.id === 'botoninstrucciones')
-        {
+        if (t.id === 'botoninstrucciones') {
             mostrarInstrucciones();
         }
-        if (t.id === 'botonjugar')
-        {
+        if (t.id === 'botonjugar') {
             startgame(),
-            cambiaBackground();
+                cambiaBackground();
         }
         ev.preventDefault();
     }
@@ -170,23 +157,22 @@
     Manejo de Teclado
     */
     function onkeydown(ev) {
-        // Detecta el evento de que el usuario está utilizando el teclado, y compara con los códigos ASCII del teclado para asignarle la función que corresponda
-        if (ev.keyCode === 39)
-        {
+        /* 
+        Detecta el evento de que el usuario está utilizando el teclado
+        y compara con los códigos ASCII del teclado para asignarle la función que corresponda
+        */
+        if (ev.keyCode === 39) {
             rightdown = true;
         }
-        else if (ev.keyCode === 37)
-        {
+        else if (ev.keyCode === 37) {
             leftdown = true;
         }
     }
     function onkeyup(ev) {
-        if (ev.keyCode === 39)
-        {
+        if (ev.keyCode === 39) {
             rightdown = false;
         }
-        else if (ev.keyCode === 37)
-        {
+        else if (ev.keyCode === 37) {
             leftdown = false;
         }
     }
@@ -205,20 +191,16 @@
     Manejo de Orientacion
     */
     function tilt(ev) {
-        if (ev.gamma < 0)
-        {
+        if (ev.gamma < 0) {
             x = x - 2;
         }
-        if (ev.gamma > 0)
-        {
+        if (ev.gamma > 0) {
             x = x + 2;
         }
-        if (x < offset)
-        {
+        if (x < offset) {
             x = offset;
         }
-        if (x > width - offset)
-        {
+        if (x > width - offset) {
             x = width - offset;
         }
     }
@@ -271,12 +253,10 @@
     Accion cuando se activa Derecha
     */
     function instruccionesSiguiente() {
-        if (caracteres[now + 1])
-        {
+        if (caracteres[now + 1]) {
             now = now + 1;
         }
-        if (caracteres[now])
-        {
+        if (caracteres[now]) {
             caracteres[now - 1].className = 'dentrointrucciones';
             caracteres[now].className = 'current';
         }
@@ -297,8 +277,7 @@
         offset = player.offsetWidth / 2;
         x = width / 2;
         sprites = [];
-        for (i = 0; i < initsprites; i++)
-        {
+        for (i = 0; i < initsprites; i++) {
             sprites.push(addsprite());
         }
         scores.energy = startenergy;
@@ -318,8 +297,7 @@
         Renderiza y actualiza Sprites
         */
         j = sprites.length;
-        for (i = 0; i < j; i++)
-        {
+        for (i = 0; i < j; i++) {
             sprites[i].render();
             sprites[i].update();
         }
@@ -334,8 +312,7 @@
         /*
         Cuando aumenta Score agrega mas Sprites
         */
-        if (~~(score / nuevoSprite) > levelincrease)
-        {
+        if (~~(score / nuevoSprite) > levelincrease) {
             sprites.push(addsprite());
             levelincrease++;
         }
@@ -343,12 +320,10 @@
         /*
         Posicion Jugador
         */
-        if (rightdown)
-        {
+        if (rightdown) {
             playerright();
         }
-        if (leftdown)
-        {
+        if (leftdown) {
             playerleft();
         }
 
@@ -384,8 +359,7 @@
     */
     function playerright() {
         x += playerincrease;
-        if (x > width - offset)
-        {
+        if (x > width - offset) {
             x = width - offset;
         }
     }
@@ -431,19 +405,16 @@
                 if ((x - offset) < this.px && this.px < (x + offset)) {
                     this.py = -200;
                     i = this.effects.length;
-                    while (i--)
-                    {
+                    while (i--) {
                         scores[this.effects[i].effect] += +this.effects[i].value;
                     }
                 }
             }
-            if (this.px > (width - this.offset) || this.px < this.offset)
-            {
+            if (this.px > (width - this.offset) || this.px < this.offset) {
                 this.vx = -this.vx;
             }
             if (this.py > height + 100) {
-                if (this.type === 'bueno')
-                {
+                if (this.type === 'bueno') {
                     i = this.effects.length;
                     while (i--) {
                         scores[this.effects[i].effect] -= +this.effects[i].value;
@@ -452,8 +423,7 @@
                 setspritedata(this);
             }
         };
-        this.render = function ()
-        {
+        this.render = function () {
             c.save();
             c.translate(this.px, this.py);
             c.translate(this.width * -0.5, this.height * -0.5);
@@ -468,8 +438,7 @@
         return s;
     };
 
-    function setspritedata(sprite)
-    {
+    function setspritedata(sprite) {
         var r = ~~rand(0, contadorSprite);
         sprite.img = listaSprites[r].img;
         sprite.height = sprite.img.offsetHeight;

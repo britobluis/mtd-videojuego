@@ -7,7 +7,8 @@ body, html {
     background: #fff;
     height: 100%;
     font-size: 1.2em;
-    font-family: Verdana, Tahoma, sans-serif;
+    font-family: luckiestguy, Verdana, Tahoma, sans-serif;
+    color: #180f2a;
     overflow: hidden;
 }
 
@@ -31,36 +32,48 @@ body, html {
 
 .pantallamenu div {
     display: flex;
-    margin: 25px 0px;
+    margin: 20px 0px;
     align-items: center;
     justify-content: center;
 }
 
 .pantallamenu .titulo {
-    font-size: 1.2em;
-    font-weight: 500;
+    margin: 0px 20px;
+    font-size: 1.6em;
+    font-weight: 300;
 }
 
 .pantallamenu .grantitulo {
-  /* TODO: Agregar fuente*/
-    font-family: LuckiestGuy;
-    src: url(LuckiestGuy.ttf);
     display: flex;
     flex-direction: column;
 }
 
 .pantallamenu .grantitulo span {
-    font-size: 1.8em;
-    font-weight: 800;
+    font-size: 2.4em;
+    font-weight: 500;
+    color: #223e65;
+}
+
+.pantallamenu .grantitulo p {
+    padding: 0px 20px;
+    font-size: 1.4em;
+    font-weight: 200;
+    color: #180f2a;
 }
 
 .pantallamenu .puntaje {
     background-color: #f14c38;
-    padding: 10px 0px;
+    margin: 30px 50px;
+    padding: 20px 0px;
+    font-size: 1.5em;
     color: #f4f1e0;
     border: 3px solid;
     border-color: #f4f1e0;
-    flex-direction: column;
+    flex-direction: row;
+}
+
+.pantallamenu .puntaje .espaciado {
+    margin-right: 20px;
 }
 
 .pantallamenu .imagenes img {
@@ -72,20 +85,23 @@ body, html {
 }
 
 .pantallamenu .botones button {
-    background: white;
+    background: #f4f1e0;
     width: 350px;
-    font-size: 1.1em;
-    margin-bottom: 10px;
-    padding: 7px 0px;
+    font-family: luckiestguy, Verdana, Tahoma, sans-serif;
+    font-size: 1.3em;
+    color: #180f2a;
+    margin-bottom: 15px;
+    padding: 15px 0px;
     border-radius: 15px;
 }
 
 /* Agregar efecto al colocar cursor sobre botones */
 
 .pantallamenu .botones button:hover {
-    font-weight: 600;
+    background-color: #180f2a;
+    color: #f4f1e0;
     cursor: pointer;
-    color: #f14c38;
+    box-shadow: 5px 5px 2px grey;
 }
 
 #juego, #juegoterminado, #instrucciones, #principal {
@@ -139,13 +155,19 @@ canvas {
 
 #dulzura, #puntaje {
     padding-left: 20px;
-    font-size: 1.2em;
-    font-weight: 600;
+    font-size: 1.4em;
+    font-weight: 300;
     color: #fff;
 }
 
 #dulzura output, #puntaje output {
     right: 20px;
+}
+
+.mensaje {
+    font-size: 1.6em;
+    font-weight: 300;
+    color: #223e65;
 }
 
 /* Para que no aparezca el cursor del mouse dentro del juego */
@@ -168,4 +190,11 @@ canvas {
     -moz-transition: 1s ease-in-out;
     -o-transition: 1s ease-in-out;
     -ms-transition: 1s ease-in-out;
+}
+
+/* Agregar fuente descargada localmente */
+
+@font-face {
+    font-family: 'luckiestguy';
+    src: url('luckiestguy.ttf') format('truetype');
 }
