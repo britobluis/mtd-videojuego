@@ -44,7 +44,8 @@
         */
         sprdata = document.querySelectorAll('img.sprite');
         i = sprdata.length;
-        while (i--) {
+        while (i--)
+        {
             actual = {};
             actual.effects = [];
             actual.img = sprdata[i];
@@ -85,9 +86,12 @@
         /*
         Trae el Score del juego o lo resetea si no hay ninguno
         */
-        if (localStorage.html5catcher) {
+        if (localStorage.html5catcher)
+        {
             scoresGuardados = JSON.parse(localStorage.html5catcher);
-        } else {
+        }
+        else
+        {
             scoresGuardados = { last: 0, high: 0 };
             localStorage.html5catcher = JSON.stringify(scoresGuardados);
         }
@@ -103,7 +107,7 @@
     Función para cambiar el background durante el juego
     */
 
-    function cambiaBackground() {
+    function cambiaBackground(){
         var images = ['Assets/2.png', 'Assets/3.png', 'Assets/4.png', 'Assets/5.png', 'Assets/6.png', 'Assets/7.png', 'Assets/8.png']
 
         setInterval(function () {
@@ -188,16 +192,20 @@
     Manejo de Orientacion
     */
     function tilt(ev) {
-        if (ev.gamma < 0) {
+        if (ev.gamma < 0)
+        {
             x = x - 2;
         }
-        if (ev.gamma > 0) {
+        if (ev.gamma > 0)
+        {
             x = x + 2;
         }
-        if (x < offset) {
+        if (x < offset)
+        {
             x = offset;
         }
-        if (x > width - offset) {
+        if (x > width - offset)
+        {
             x = width - offset;
         }
     }
@@ -250,10 +258,12 @@
     Accion cuando se activa Derecha
     */
     function instruccionesSiguiente() {
-        if (caracteres[now + 1]) {
+        if (caracteres[now + 1])
+        {
             now = now + 1;
         }
-        if (caracteres[now]) {
+        if (caracteres[now])
+        {
             caracteres[now - 1].className = 'dentrointrucciones';
             caracteres[now].className = 'current';
         }
@@ -274,7 +284,8 @@
         offset = player.offsetWidth / 2;
         x = width / 2;
         sprites = [];
-        for (i = 0; i < initsprites; i++) {
+        for (i = 0; i < initsprites; i++)
+        {
             sprites.push(addsprite());
         }
         scores.energy = startenergy;
@@ -294,7 +305,8 @@
         Renderiza y actualiza Sprites
         */
         j = sprites.length;
-        for (i = 0; i < j; i++) {
+        for (i = 0; i < j; i++)
+        {
             sprites[i].render();
             sprites[i].update();
         }
@@ -309,7 +321,8 @@
         /*
         Cuando aumenta Score agrega mas Sprites
         */
-        if (~~(score / nuevoSprite) > levelincrease) {
+        if (~~(score / nuevoSprite) > levelincrease)
+        {
             sprites.push(addsprite());
             levelincrease++;
         }
@@ -317,10 +330,12 @@
         /*
         Posicion Jugador
         */
-        if (rightdown) {
+        if (rightdown)
+        {
             playerright();
         }
-        if (leftdown) {
+        if (leftdown)
+        {
             playerleft();
         }
 
@@ -356,7 +371,8 @@
     */
     function playerright() {
         x += playerincrease;
-        if (x > width - offset) {
+        if (x > width - offset)
+        {
             x = width - offset;
         }
     }
@@ -408,11 +424,13 @@
                     }
                 }
             }
-            if (this.px > (width - this.offset) || this.px < this.offset) {
+            if (this.px > (width - this.offset) || this.px < this.offset)
+            {
                 this.vx = -this.vx;
             }
             if (this.py > height + 100) {
-                if (this.type === 'bueno') {
+                if (this.type === 'bueno')
+                {
                     i = this.effects.length;
                     while (i--) {
                         scores[this.effects[i].effect] -= +this.effects[i].value;
@@ -421,7 +439,8 @@
                 setspritedata(this);
             }
         };
-        this.render = function () {
+        this.render = function ()
+        {
             c.save();
             c.translate(this.px, this.py);
             c.translate(this.width * -0.5, this.height * -0.5);
@@ -436,7 +455,8 @@
         return s;
     };
 
-    function setspritedata(sprite) {
+    function setspritedata(sprite)
+    {
         var r = ~~rand(0, contadorSprite);
         sprite.img = listaSprites[r].img;
         sprite.height = sprite.img.offsetHeight;
