@@ -8,8 +8,8 @@
         player = $('#jugador'),
         principal = $('#principal'),
         instrucciones = $('#instrucciones'),
-        scoredisplay = $('#puntaje output'),
-        energydisplay = $('#dulzura output'),
+        muestraScore = $('#puntaje output'),
+        muestraDulzura = $('#dulzura output'),
         canvas = $('canvas'),
         over = $('#juegoterminado'),
         msjGameOver = over.querySelector('.mensaje'),
@@ -303,7 +303,7 @@
         c.restore();
 
         /*
-          Cuando aun tienes energia, renderiza Siguiente instruccion, sino gameover
+          Cuando aun tienes dulzura, renderiza Siguiente instruccion, sino gameover
          */
         scores.energy = Math.min(scores.energy, 100);
         if (scores.energy > 0) {
