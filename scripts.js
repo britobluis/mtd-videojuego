@@ -79,7 +79,7 @@
         contenedor.addEventListener('touchstart', ontouchstart, false);
         contenedor.addEventListener('touchend', ontouchend, false);
         contenedor.addEventListener('click', onclick, false);
-        contenedor.addEventListener('mousemove', onmousemove, false);
+        // contenedor.addEventListener('mousemove', onmousemove, false);
         window.addEventListener('deviceorientation', tilt, false);
 
         /*
@@ -123,13 +123,29 @@
     */
     function onclick(ev) {
         var t = ev.target;
-        if (estadoDelJuego === 'gameover') {
-            if (t.id === 'jugardenuevo') { showintro(); }
+        if (estadoDelJuego === 'gameover') 
+        {
+            if (t.id === 'jugardenuevo') { 
+                showintro(); 
+            }
         }
-        if (t.className === 'proximo') { instruccionesSiguiente(); }
-        if (t.className === 'endinstructions') { instruccionesListo(); }
-        if (t.id === 'botoninstrucciones') { mostrarInstrucciones(); }
-        if (t.id === 'botonjugar') { startgame(), cambiaBackground(); }
+        if (t.className === 'proximo') 
+        { 
+            instruccionesSiguiente(); 
+        }
+        if (t.className === 'endinstructions') 
+        { 
+            instruccionesListo(); 
+        }
+        if (t.id === 'botoninstrucciones') 
+        { 
+            mostrarInstrucciones(); 
+        }
+        if (t.id === 'botonjugar') 
+        { 
+            startgame(), 
+            cambiaBackground(); 
+        }
         ev.preventDefault();
     }
 
@@ -137,12 +153,25 @@
     Manejo de Teclado
     */
     function onkeydown(ev) {
-        if (ev.keyCode === 39) { rightdown = true; }
-        else if (ev.keyCode === 37) { leftdown = true; }
+        // Detecta el evento de que el usuario está utilizando el teclado, y compara con los códigos ASCII del teclado para asignarle la función que corresponda
+        if (ev.keyCode === 39) 
+        { 
+            rightdown = true; 
+        }
+        else if (ev.keyCode === 37) 
+        { 
+            leftdown = true; 
+        }
     }
     function onkeyup(ev) {
-        if (ev.keyCode === 39) { rightdown = false; }
-        else if (ev.keyCode === 37) { leftdown = false; }
+        if (ev.keyCode === 39) 
+        { 
+            rightdown = false; 
+        }
+        else if (ev.keyCode === 37) 
+        { 
+            leftdown = false; 
+        }
     }
 
     /*
@@ -176,16 +205,16 @@
     /*
     Manejo del Mouse
     */
-    function onmousemove(ev) {
-        var mx = ev.clientX - contenedor.offsetLeft;
-        if (mx < offset) {
-            mx = offset;
-        }
-        if (mx > width - offset) {
-            mx = width - offset;
-        }
-        x = mx;
-    }
+    // function onmousemove(ev) {
+    //     var mx = ev.clientX - contenedor.offsetLeft;
+    //     if (mx < offset) {
+    //         mx = offset;
+    //     }
+    //     if (mx > width - offset) {
+    //         mx = width - offset;
+    //     }
+    //     x = mx;
+    // }
 
     /*
     Introduccion
