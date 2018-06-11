@@ -55,7 +55,7 @@ body, html {
     background-color: #f14c38;
     padding: 10px 0px;
     color: #f4f1e0;
-    border: 2px solid;
+    border: 3px solid;
     border-color: #f4f1e0;
     flex-direction: column;
 }
@@ -100,12 +100,6 @@ section {
     display: block;
 }
 
-/* Para que no aparezca el cursor del mouse dentro del juego */
-
-#juego {
-    cursor: none;
-}
-
 #jugador {
     display: block;
     margin: 5px auto;
@@ -146,15 +140,24 @@ canvas {
     right: 20px;
 }
 
+/* Para que no aparezca el cursor del mouse dentro del juego */
+
+#juego {
+    cursor: none;
+}
+
+/* Acompaña a función "cambiaBackground" en script.js */
+
 #cambiabackground {
     background-image: url("Assets/1.png");
+    background-size: cover;
+    transition: 1s ease-in-out;
+    /* Para compatibilidad con mayoría de navegadores */
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
-    background-size: cover;
-    -webkit-transition: background 1s ease-in-out;
-    -moz-transition: background 1s ease-in-out;
-    -o-transition: background 1s ease-in-out;
-    -ms-transition: background 1s ease-in-out;
-    transition: background 1s ease-in-out;
+    -webkit-transition: 1s ease-in-out;
+    -moz-transition: 1s ease-in-out;
+    -o-transition: 1s ease-in-out;
+    -ms-transition: 1s ease-in-out;
 }

@@ -8,8 +8,6 @@
         player = $('#jugador'),
         principal = $('#principal'),
         instrucciones = $('#instrucciones'),
-        // leftbutton = $('.left'),
-        // rightbutton = $('.right'),
         scoredisplay = $('#puntaje output'),
         energydisplay = $('#dulzura output'),
         canvas = $('canvas'),
@@ -34,6 +32,7 @@
         spritecount = 0, now = 0, old = null, playerY = 0, offset = 0,
         width = 0, height = 0, levelincrease = 0, i = 0, storedscores = null,
         initsprites = 0, newsprite = 500, rightdown = false, leftdown = false;
+
     /*
     Configuracion del juego
     */
@@ -101,7 +100,9 @@
 
     };
 
-    // Función para cambiar el background durante el juego
+    /*
+    Función para cambiar el background durante el juego
+    */
 
     function cambiaBackground() {
         var images = ['Assets/2.png', 'Assets/3.png', 'Assets/4.png', 'Assets/5.png', 'Assets/6.png', 'Assets/7.png', 'Assets/8.png']
@@ -114,11 +115,11 @@
             images.push(firstValue);
 
 
-        }, 10000);
+        }, 12000);
 
     }
 
-    /* Event Handlers */
+    cambiaBackground();
 
     /*
     Manejo de Clicks
@@ -131,7 +132,7 @@
         if (t.className === 'proximo') { instructionsnext(); }
         if (t.className === 'endinstructions') { instructionsdone(); }
         if (t.id === 'botoninstrucciones') { showinstructions(); }
-        if (t.id === 'botonjugar') { startgame(), cambiaBackground();}
+        if (t.id === 'botonjugar') { startgame(); }
         ev.preventDefault();
     }
 
@@ -152,13 +153,9 @@
     */
     function ontouchstart(ev) {
         if (gamestate === 'playing') { ev.preventDefault(); }
-        // if (ev.target === rightbutton) { rightdown = true; }
-        // else if (ev.target === leftbutton) { leftdown = true; }
     }
     function ontouchend(ev) {
         if (gamestate === 'playing') { ev.preventDefault(); }
-        // if (ev.target === rightbutton) { rightdown = false; }
-        // else if (ev.target === leftbutton) { leftdown = false; }
     }
 
     /*
