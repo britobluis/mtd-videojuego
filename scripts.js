@@ -8,16 +8,16 @@
         player = $('#jugador'),
         principal = $('#principal'),
         instrucciones = $('#instrucciones'),
-        // leftbutton = $('.left'),
-        // rightbutton = $('.right'),
-        scoredisplay = $('#puntaje output'),
-        energydisplay = $('#dulzura output'),
+        // botonizquierdo = $('.left'),
+        // botonderecho = $('.right'),
+        muestraScore = $('#puntaje output'),
+        muestraDulzura = $('#dulzura output'),
         canvas = $('canvas'),
         over = $('#juegoterminado'),
-        overmsg = over.querySelector('.mensaje'),
-        characters = document.querySelectorAll('div.dentrointrucciones'),
+        msjGameOver = over.querySelector('.mensaje'),
+        caracteres = document.querySelectorAll('div.dentrointrucciones'),
         c = canvas.getContext('2d'),
-        startenergy = +energydisplay.innerHTML;
+        startenergy = +muestraDulzura.innerHTML;
 
     /*
     Datos del Juego
@@ -30,16 +30,16 @@
     /*
     Contadores
     */
-    var score = 0, gamestate = null, x = 0, sprites = [], allsprites = [],
-        spritecount = 0, now = 0, old = null, playerY = 0, offset = 0,
-        width = 0, height = 0, levelincrease = 0, i = 0, storedscores = null,
-        initsprites = 0, newsprite = 500, rightdown = false, leftdown = false;
+    var score = 0, estadoDelJuego = null, x = 0, sprites = [], listaSprites = [],
+        contadorSprite = 0, now = 0, viejo = null, playerY = 0, offset = 0,
+        width = 0, height = 0, levelincrease = 0, i = 0, scoresGuardados = null,
+        initsprites = 0, nuevoSprite = 500, rightdown = false, leftdown = false;
     /*
     Configuracion del juego
     */
 
     function init() {
-        var current, sprdata, informacionpuntaje, i, j;
+        var actual, sprdata, informacionpuntaje, i, j;
 
         /*
         Trae el Sprite del HTML
@@ -47,25 +47,25 @@
         sprdata = document.querySelectorAll('img.sprite');
         i = sprdata.length;
         while (i--) {
-            current = {};
-            current.effects = [];
-            current.img = sprdata[i];
-            current.offset = sprdata[i].offsetWidth / 2;
+            actual = {};
+            actual.effects = [];
+            actual.img = sprdata[i];
+            actual.offset = sprdata[i].offsetWidth / 2;
             informacionpuntaje = sprdata[i].getAttribute('data-collision').split(',');
             j = informacionpuntaje.length;
             while (j--) {
                 var keyval = informacionpuntaje[j].split(':');
-                current.effects.push({
+                actual.effects.push({
                     effect: keyval[0],
                     value: keyval[1]
                 });
             }
-            current.type = sprdata[i].getAttribute('data-type');
-            allsprites.push(current);
+            actual.type = sprdata[i].getAttribute('data-type');
+            listaSprites.push(actual);
         }
-        spritecount = allsprites.length;
+        contadorSprite = listaSprites.length;
         initsprites = +$('#personajes').getAttribute('data-countstart');
-        newsprite = +$('#personajes').getAttribute('data-newsprite');
+        nuevoSprite = +$('#personajes').getAttribute('data-newsprite');
 
         /*
         Habilita el teclado en el juego
@@ -88,10 +88,10 @@
         Trae el Score del juego o lo resetea si no hay ninguno
         */
         if (localStorage.html5catcher) {
-            storedscores = JSON.parse(localStorage.html5catcher);
+            scoresGuardados = JSON.parse(localStorage.html5catcher);
         } else {
-            storedscores = { last: 0, high: 0 };
-            localStorage.html5catcher = JSON.stringify(storedscores);
+            scoresGuardados = { last: 0, high: 0 };
+            localStorage.html5catcher = JSON.stringify(scoresGuardados);
         }
 
         /*
@@ -118,19 +118,21 @@
 
     }
 
-    /* Event Handlers */
+    /*
+    Manejadores de Eventos
+    */
 
     /*
     Manejo de Clicks
     */
     function onclick(ev) {
         var t = ev.target;
-        if (gamestate === 'gameover') {
+        if (estadoDelJuego === 'gameover') {
             if (t.id === 'jugardenuevo') { showintro(); }
         }
-        if (t.className === 'proximo') { instructionsnext(); }
-        if (t.className === 'endinstructions') { instructionsdone(); }
-        if (t.id === 'botoninstrucciones') { showinstructions(); }
+        if (t.className === 'proximo') { instruccionesSiguiente(); }
+        if (t.className === 'endinstructions') { instruccionesListo(); }
+        if (t.id === 'botoninstrucciones') { showinstrucciones(); }
         if (t.id === 'botonjugar') { startgame(), cambiaBackground();}
         ev.preventDefault();
     }
@@ -151,12 +153,16 @@
     Manejo de Touch Screen
     */
     function ontouchstart(ev) {
-        if (gamestate === 'playing') { ev.preventDefault(); }
+        if (estadoDelJuego === 'playing'){
+          ev.preventDefault();
+        }
         // if (ev.target === rightbutton) { rightdown = true; }
         // else if (ev.target === leftbutton) { leftdown = true; }
     }
     function ontouchend(ev) {
-        if (gamestate === 'playing') { ev.preventDefault(); }
+        if (estadoDelJuego === 'playing') {
+          ev.preventDefault();
+        }
         // if (ev.target === rightbutton) { rightdown = false; }
         // else if (ev.target === leftbutton) { leftdown = false; }
     }
@@ -165,10 +171,18 @@
     Manejo de Orientacion
     */
     function tilt(ev) {
-        if (ev.gamma < 0) { x = x - 2; }
-        if (ev.gamma > 0) { x = x + 2; }
-        if (x < offset) { x = offset; }
-        if (x > width - offset) { x = width - offset; }
+        if (ev.gamma < 0){
+          x = x - 2;
+        }
+        if (ev.gamma > 0){
+          x = x + 2;
+        }
+        if (x < offset){
+          x = offset;
+        }
+        if (x > width - offset){
+          x = width - offset;
+        }
     }
 
     /*
@@ -176,8 +190,12 @@
     */
     function onmousemove(ev) {
         var mx = ev.clientX - contenedor.offsetLeft;
-        if (mx < offset) { mx = offset; }
-        if (mx > width - offset) { mx = width - offset; }
+        if (mx < offset){
+          mx = offset;
+        }
+        if (mx > width - offset){
+          mx = width - offset;
+        }
         x = mx;
     }
 
@@ -185,28 +203,28 @@
     Introduccion
     */
     function showintro() {
-        setcurrent(principal);
-        gamestate = 'principal';
+        setactual(principal);
+        estadoDelJuego = 'principal';
         var scoreelms = principal.querySelectorAll('output');
-        scoreelms[0].innerHTML = storedscores.last;
-        scoreelms[1].innerHTML = storedscores.high;
+        scoreelms[0].innerHTML = scoresGuardados.last;
+        scoreelms[1].innerHTML = scoresGuardados.high;
     }
 
     /*
     Instrucciones
     */
-    function showinstructions() {
-        setcurrent(instrucciones);
-        gamestate = 'instrucciones';
+    function showinstrucciones() {
+        setactual(instrucciones);
+        estadoDelJuego = 'instrucciones';
         now = 0;
-        characters[now].className = 'current';
+        caracteres[now].className = 'current';
     }
 
     /*
     Accion cuando se activa Izquierda
     */
-    function instructionsdone() {
-        characters[now].className = 'dentrointrucciones';
+    function instruccionesListo() {
+        caracteres[now].className = 'dentrointrucciones';
         now = 0;
         showintro();
     }
@@ -214,13 +232,13 @@
     /*
     Accion cuando se activa Derecha
     */
-    function instructionsnext() {
-        if (characters[now + 1]) {
+    function instruccionesSiguiente() {
+        if (caracteres[now + 1]) {
             now = now + 1;
         }
-        if (characters[now]) {
-            characters[now - 1].className = 'dentrointrucciones';
-            characters[now].className = 'current';
+        if (caracteres[now]) {
+            caracteres[now - 1].className = 'dentrointrucciones';
+            caracteres[now].className = 'current';
         }
     }
 
@@ -228,8 +246,8 @@
     Comienza el Juego
     */
     function startgame() {
-        setcurrent(field);
-        gamestate = 'playing';
+        setactual(field);
+        estadoDelJuego = 'playing';
         document.body.className = 'playing';
         width = field.offsetWidth;
         height = field.offsetHeight;
@@ -245,7 +263,7 @@
         scores.energy = startenergy;
         levelincrease = 0;
         score = 0;
-        energydisplay.innerHTML = startenergy;
+        muestraDulzura.innerHTML = startenergy;
         loop();
     }
 
@@ -267,14 +285,14 @@
         /*
         Muestra Scores
         */
-        energydisplay.innerHTML = scores.energy;
-        scoredisplay.innerHTML = ~~(score / 10);
+        muestraDulzura.innerHTML = scores.energy;
+        muestraScore.innerHTML = ~~(score / 10);
         score++;
 
         /*
         Cuando aumenta Score agrega mas Sprites
         */
-        if (~~(score / newsprite) > levelincrease) {
+        if (~~(score / nuevoSprite) > levelincrease) {
             sprites.push(addsprite());
             levelincrease++;
         }
@@ -282,8 +300,12 @@
         /*
         Posicion Jugador
         */
-        if (rightdown) { playerright(); }
-        if (leftdown) { playerleft(); }
+        if (rightdown) {
+          playerright();
+        }
+        if (leftdown) {
+          playerleft();
+        }
 
         c.save();
         c.translate(x - offset, playerY);
@@ -291,7 +313,7 @@
         c.restore();
 
         /*
-          Cuando aun tienes energia, renderiza next, sino gameover
+          Cuando aun tienes energia, renderiza Siguiente instruccion, sino gameover
          */
         scores.energy = Math.min(scores.energy, 100);
         if (scores.energy > 0) {
@@ -307,7 +329,9 @@
     */
     function playerleft() {
         x -= playerincrease;
-        if (x < offset) { x = offset; }
+        if (x < offset) {
+          x = offset;
+        }
     }
 
     /*
@@ -315,7 +339,9 @@
     */
     function playerright() {
         x += playerincrease;
-        if (x > width - offset) { x = width - offset; }
+        if (x > width - offset){
+          x = width - offset;
+        }
     }
 
     /*
@@ -323,16 +349,16 @@
     */
     function gameover() {
         document.body.className = 'gameover';
-        setcurrent(over);
-        gamestate = 'gameover';
+        setactual(over);
+        estadoDelJuego = 'gameover';
         var nowscore = ~~(score / 10);
         over.querySelector('output').innerHTML = nowscore;
-        storedscores.last = nowscore;
-        if (nowscore > storedscores.high) {
-            overmsg.innerHTML = overmsg.getAttribute('data-highscore');
-            storedscores.high = nowscore;
+        scoresGuardados.last = nowscore;
+        if (nowscore > scoresGuardados.high) {
+            msjGameOver.innerHTML = msjGameOver.getAttribute('data-highscore');
+            scoresGuardados.high = nowscore;
         }
-        localStorage.html5catcher = JSON.stringify(storedscores);
+        localStorage.html5catcher = JSON.stringify(scoresGuardados);
     }
 
     /*
@@ -393,13 +419,13 @@
     };
 
     function setspritedata(sprite) {
-        var r = ~~rand(0, spritecount);
-        sprite.img = allsprites[r].img;
+        var r = ~~rand(0, contadorSprite);
+        sprite.img = listaSprites[r].img;
         sprite.height = sprite.img.offsetHeight;
         sprite.width = sprite.img.offsetWidth;
-        sprite.type = allsprites[r].type;
-        sprite.effects = allsprites[r].effects;
-        sprite.offset = allsprites[r].offset;
+        sprite.type = listaSprites[r].type;
+        sprite.effects = listaSprites[r].effects;
+        sprite.offset = listaSprites[r].offset;
         sprite.py = -100;
         sprite.px = rand(sprite.width / 2, width - sprite.width / 2);
         sprite.vx = rand(-1, 2);
@@ -423,10 +449,12 @@
     /*
     Muestra parte actual del juego y oculta la anterior
     */
-    function setcurrent(elm) {
-        if (old) { old.className = ''; }
+    function setactual(elm) {
+        if (viejo){
+          viejo.className = '';
+        }
         elm.className = 'current';
-        old = elm;
+        viejo = elm;
     };
 
     /*
