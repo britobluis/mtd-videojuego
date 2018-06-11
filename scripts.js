@@ -4,7 +4,7 @@
     Elementos del DOM
     */
     var contenedor = $('#contenedor'),
-        field = $('#juego'),
+        juego = $('#juego'),
         player = $('#jugador'),
         principal = $('#principal'),
         instrucciones = $('#instrucciones'),
@@ -118,8 +118,6 @@
 
     }
 
-    cambiaBackground();
-
     /*
     Manejo de Clicks
     */
@@ -128,10 +126,10 @@
         if (estadoDelJuego === 'gameover') {
             if (t.id === 'jugardenuevo') { showintro(); }
         }
-        if (t.className === 'proximo') { instructionsnext(); }
-        if (t.className === 'endinstructions') { instructionsdone(); }
-        if (t.id === 'botoninstrucciones') { showinstructions(); }
-        if (t.id === 'botonjugar') { startgame(); }
+        if (t.className === 'proximo') { instruccionesSiguiente(); }
+        if (t.className === 'endinstructions') { instruccionesListo(); }
+        if (t.id === 'botoninstrucciones') { mostrarInstrucciones(); }
+        if (t.id === 'botonjugar') { startgame(), cambiaBackground(); }
         ev.preventDefault();
     }
 
@@ -151,27 +149,27 @@
     Manejo de Touch Screen
     */
     function ontouchstart(ev) {
-        if (gamestate === 'playing') { ev.preventDefault(); }
+        if (gamestate === 'jugando') { ev.preventDefault(); }
     }
     function ontouchend(ev) {
-        if (gamestate === 'playing') { ev.preventDefault(); }
+        if (gamestate === 'jugando') { ev.preventDefault(); }
     }
 
     /*
     Manejo de Orientacion
     */
     function tilt(ev) {
-        if (ev.gamma < 0){
-          x = x - 2;
+        if (ev.gamma < 0) {
+            x = x - 2;
         }
-        if (ev.gamma > 0){
-          x = x + 2;
+        if (ev.gamma > 0) {
+            x = x + 2;
         }
-        if (x < offset){
-          x = offset;
+        if (x < offset) {
+            x = offset;
         }
-        if (x > width - offset){
-          x = width - offset;
+        if (x > width - offset) {
+            x = width - offset;
         }
     }
 
@@ -180,11 +178,11 @@
     */
     function onmousemove(ev) {
         var mx = ev.clientX - contenedor.offsetLeft;
-        if (mx < offset){
-          mx = offset;
+        if (mx < offset) {
+            mx = offset;
         }
-        if (mx > width - offset){
-          mx = width - offset;
+        if (mx > width - offset) {
+            mx = width - offset;
         }
         x = mx;
     }
@@ -203,7 +201,7 @@
     /*
     Instrucciones
     */
-    function showinstrucciones() {
+    function mostrarInstrucciones() {
         setactual(instrucciones);
         estadoDelJuego = 'instrucciones';
         now = 0;
@@ -236,11 +234,11 @@
     Comienza el Juego
     */
     function startgame() {
-        setactual(field);
-        estadoDelJuego = 'playing';
-        document.body.className = 'playing';
-        width = field.offsetWidth;
-        height = field.offsetHeight;
+        setactual(juego);
+        estadoDelJuego = 'jugando';
+        document.body.className = 'jugando';
+        width = juego.offsetWidth;
+        height = juego.offsetHeight;
         canvas.width = width;
         canvas.height = height;
         playerY = height - player.offsetHeight;
@@ -291,10 +289,10 @@
         Posicion Jugador
         */
         if (rightdown) {
-          playerright();
+            playerright();
         }
         if (leftdown) {
-          playerleft();
+            playerleft();
         }
 
         c.save();
@@ -320,7 +318,7 @@
     function playerleft() {
         x -= playerincrease;
         if (x < offset) {
-          x = offset;
+            x = offset;
         }
     }
 
@@ -329,8 +327,8 @@
     */
     function playerright() {
         x += playerincrease;
-        if (x > width - offset){
-          x = width - offset;
+        if (x > width - offset) {
+            x = width - offset;
         }
     }
 
@@ -440,8 +438,8 @@
     Muestra parte actual del juego y oculta la anterior
     */
     function setactual(elm) {
-        if (viejo){
-          viejo.className = '';
+        if (viejo) {
+            viejo.className = '';
         }
         elm.className = 'current';
         viejo = elm;
