@@ -28,10 +28,23 @@
     /*
     Contadores
     */
-    var score = 0, estadoDelJuego = null, x = 0, sprites = [], listaSprites = [],
-        contadorSprite = 0, now = 0, viejo = null, playerY = 0, offset = 0,
-        width = 0, height = 0, levelincrease = 0, i = 0, scoresGuardados = null,
-        initsprites = 0, nuevoSprite = 500, rightdown = false, leftdown = false;
+    var score = 0,
+    estadoDelJuego = null,
+    x = 0,
+    sprites = [],
+    listaSprites = [],
+    contadorSprite = 0,
+    now = 0,
+    viejo = null,
+    playerY = 0,
+    offset = 0,
+    width = 0, height = 0,
+    levelincrease = 0, i = 0,
+    scoresGuardados = null,
+    initsprites = 0,
+    nuevoSprite = 500,
+    rightdown = false,
+    leftdown = false;
     /*
     Configuracion del juego
     */
@@ -515,3 +528,6 @@
     */
     init();
 })();
+/*
+Fin del juego
+*/
