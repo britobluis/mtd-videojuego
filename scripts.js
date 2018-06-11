@@ -123,28 +123,28 @@
     */
     function onclick(ev) {
         var t = ev.target;
-        if (estadoDelJuego === 'gameover') 
+        if (estadoDelJuego === 'gameover')
         {
-            if (t.id === 'jugardenuevo') { 
-                showintro(); 
+            if (t.id === 'jugardenuevo') {
+                showintro();
             }
         }
-        if (t.className === 'proximo') 
-        { 
-            instruccionesSiguiente(); 
+        if (t.className === 'proximo')
+        {
+            instruccionesSiguiente();
         }
-        if (t.className === 'endinstructions') 
-        { 
-            instruccionesListo(); 
+        if (t.className === 'endinstructions')
+        {
+            instruccionesListo();
         }
-        if (t.id === 'botoninstrucciones') 
-        { 
-            mostrarInstrucciones(); 
+        if (t.id === 'botoninstrucciones')
+        {
+            mostrarInstrucciones();
         }
-        if (t.id === 'botonjugar') 
-        { 
-            startgame(), 
-            cambiaBackground(); 
+        if (t.id === 'botonjugar')
+        {
+            startgame(),
+            cambiaBackground();
         }
         ev.preventDefault();
     }
@@ -154,23 +154,23 @@
     */
     function onkeydown(ev) {
         // Detecta el evento de que el usuario está utilizando el teclado, y compara con los códigos ASCII del teclado para asignarle la función que corresponda
-        if (ev.keyCode === 39) 
-        { 
-            rightdown = true; 
+        if (ev.keyCode === 39)
+        {
+            rightdown = true;
         }
-        else if (ev.keyCode === 37) 
-        { 
-            leftdown = true; 
+        else if (ev.keyCode === 37)
+        {
+            leftdown = true;
         }
     }
     function onkeyup(ev) {
-        if (ev.keyCode === 39) 
-        { 
-            rightdown = false; 
+        if (ev.keyCode === 39)
+        {
+            rightdown = false;
         }
-        else if (ev.keyCode === 37) 
-        { 
-            leftdown = false; 
+        else if (ev.keyCode === 37)
+        {
+            leftdown = false;
         }
     }
 
@@ -402,7 +402,8 @@
                 if ((x - offset) < this.px && this.px < (x + offset)) {
                     this.py = -200;
                     i = this.effects.length;
-                    while (i--) {
+                    while (i--)
+                    {
                         scores[this.effects[i].effect] += +this.effects[i].value;
                     }
                 }
