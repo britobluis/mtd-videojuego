@@ -42,6 +42,9 @@ body, html {
 }
 
 .pantallamenu .grantitulo {
+  /* TODO: Agregar fuente*/
+    font-family: LuckiestGuy;
+    src: url(LuckiestGuy.ttf);
     display: flex;
     flex-direction: column;
 }
