@@ -110,6 +110,7 @@
 
     /*
     Función para cambiar el background durante el juego
+    almacena en una array los diferentes assets de fondo de pantalla del juego
     */
 
     function cambiaBackground() {
@@ -122,13 +123,12 @@
             var firstValue = images.shift();
             images.push(firstValue);
 
-
         }, 12000);
 
     }
 
     /*
-    Manejo de Clicks
+    Manejo de Clicks que detecta la presion de un clik del mause el el menu inicial
     */
     function onclick(ev) {
         var t = ev.target;
@@ -155,9 +155,9 @@
 
     /*
     Manejo de Teclado
-    */
+    */-
     function onkeydown(ev) {
-        /* 
+        /*
         Detecta el evento de que el usuario está utilizando el teclado
         y compara con los códigos ASCII del teclado para asignarle la función que corresponda
         */
@@ -231,7 +231,7 @@
     }
 
     /*
-    Instrucciones
+    muestra las instrucciones para jugarlo
     */
     function mostrarInstrucciones() {
         setactual(instrucciones);
@@ -239,7 +239,7 @@
         now = 0;
         caracteres[now].className = 'current';
     }
-
+    /*movimientos del personaje*/
     /*
     Accion cuando se activa Izquierda
     */
@@ -261,7 +261,7 @@
             caracteres[now].className = 'current';
         }
     }
-
+    /*startgame prepara el juego para comezar y setea los valores
     /*
     Comienza el Juego
     */
@@ -288,7 +288,7 @@
     }
 
     /*
-    Bucle Pricipal del Juego
+    Bucle Principal del Juego
     */
     function loop() {
         ctx.clearRect(0, 0, width, height);
@@ -375,7 +375,7 @@
         terminado.querySelector('output').innerHTML = nowscore;
         scoresGuardados.last = nowscore;
         if (nowscore > scoresGuardados.high) {
-            msjjuegoterminado.innerHTML = msjjuegoterminado.getAttribute('data-highscore');
+            msjjuegoterminado.innerH9TML = msjjuegoterminado.getAttribute('data-highscore');
             scoresGuardados.high = nowscore;
         }
         localStorage.html5catcher = JSON.stringify(scoresGuardados);
@@ -437,6 +437,9 @@
         setspritedata(s);
         return s;
     };
+    /*
+    funcion que obtiene los sprites para ostrarlos por pantalla
+    */
 
     function setspritedata(sprite) {
         var r = ~~rand(0, contadorSprite);
