@@ -54,7 +54,11 @@
     */
 
     function init() {
-        var actual, sprdata, informacionpuntaje, i, j;
+        var actual,
+        sprdata,
+        informacionpuntaje,
+        i,
+        j;
 
         /*
         Trae el Sprite del HTML
@@ -113,6 +117,7 @@
 
     /*
     Función para cambiar el background durante el juego
+    almacena en una array los diferentes assets de fondo de pantalla del juego
     */
 
     function cambiaBackground() {
@@ -125,13 +130,12 @@
             var firstValue = images.shift();
             images.push(firstValue);
 
-
         }, 12000);
 
     }
 
     /*
-    Manejo de clicks en botones
+    Manejo de Clicks 
     */
 
     function onclick(ev) {
@@ -162,7 +166,7 @@
     */
 
     function onkeydown(ev) {
-        /* 
+        /*
         Detecta el evento de que el usuario está utilizando el teclado
         y compara con los códigos ASCII del teclado para asignarle la función que corresponda
         */
@@ -210,7 +214,7 @@
     }
 
     /*
-    Instrucciones
+    muestra las instrucciones para jugarlo
     */
 
     function mostrarInstrucciones() {
@@ -219,7 +223,7 @@
         now = 0;
         personajes[now].className = 'current';
     }
-
+    /*movimientos del personaje*/
     /*
     Accion cuando se activa Izquierda
     */
@@ -231,7 +235,7 @@
     }
 
     /*
-    Accion cuando se activa Derecha
+    Accion cuando se activa Derecha ahora
     */
 
     function instruccionesSiguiente() {
@@ -243,7 +247,7 @@
             personajes[now].className = 'current';
         }
     }
-
+    /*startgame prepara el juego para comezar y setea los valores
     /*
     Comienza el Juego
     */
@@ -271,7 +275,7 @@
     }
 
     /*
-    Bucle Pricipal del Juego
+    Bucle Principal del Juego
     */
 
     function loop() {
@@ -367,7 +371,7 @@
         terminado.querySelector('output').innerHTML = nowscore;
         scoresGuardados.last = nowscore;
         if (nowscore > scoresGuardados.high) {
-            msjjuegoterminado.innerHTML = msjjuegoterminado.getAttribute('data-highscore');
+            msjjuegoterminado.innerH9TML = msjjuegoterminado.getAttribute('data-highscore');
             scoresGuardados.high = nowscore;
         }
     }
@@ -425,6 +429,9 @@
         setspritedata(s);
         return s;
     };
+    /*
+    funcion que obtiene los sprites para ostrarlos por pantalla
+    */
 
     function setspritedata(sprite) {
         var r = ~~rand(0, contadorSprite);
