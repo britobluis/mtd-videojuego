@@ -3,6 +3,7 @@
     /*
     Elementos del DOM
     */
+
     var contenedor = $('#contenedor'),
         juego = $('#juego'),
         player = $('#luis'),
@@ -13,13 +14,14 @@
         canvas = $('canvas'),
         terminado = $('#juegoterminado'),
         msjjuegoterminado = terminado.querySelector('.mensaje'),
-        caracteres = document.querySelectorAll('div.dentrointrucciones'),
+        personajes = document.querySelectorAll('div.dentrointrucciones'),
         ctx = canvas.getContext('2d'),
         startenergy = +muestraDulzura.innerHTML;
 
     /*
     Datos del Juego
     */
+
     var scores = {
         energy: startenergy
     },
@@ -28,6 +30,7 @@
     /*
     Contadores
     */
+
     var score = 0,
         estadoDelJuego = null,
         x = 0,
@@ -45,6 +48,7 @@
         nuevoSprite = 500,
         rightdown = false,
         leftdown = false;
+
     /*
     Configuracion del juego
     */
@@ -55,6 +59,7 @@
         /*
         Trae el Sprite del HTML
         */
+
         sprdata = document.querySelectorAll('img.sprite');
         i = sprdata.length;
         while (i--) {
@@ -89,20 +94,19 @@
         */
         contenedor.addEventListener('keydown', onkeydown, false);
         contenedor.addEventListener('keyup', onkeyup, false);
-        contenedor.addEventListener('touchstart', ontouchstart, false);
-        contenedor.addEventListener('touchend', ontouchend, false);
         contenedor.addEventListener('click', onclick, false);
         contenedor.addEventListener('mousemove', onmousemove, false);
-        window.addEventListener('deviceorientation', tilt, false);
 
         /*
         scoreGuardados sirve para guardar los últimos puntajes obtenidos
         */
+
         scoresGuardados = { last: 0, high: 0 };
 
         /*
         Muestra la introduccion
         */
+        
         showintro();
 
     };
@@ -127,8 +131,9 @@
     }
 
     /*
-    Manejo de Clicks
+    Manejo de clicks en botones
     */
+
     function onclick(ev) {
         var t = ev.target;
         if (estadoDelJuego === 'juegoterminado') {
@@ -155,6 +160,7 @@
     /*
     Manejo de Teclado
     */
+
     function onkeydown(ev) {
         /* 
         Detecta el evento de que el usuario está utilizando el teclado
@@ -177,36 +183,9 @@
     }
 
     /*
-    Manejo de Touch Screen
-    */
-    function ontouchstart(ev) {
-        if (gamestate === 'jugando') { ev.preventDefault(); }
-    }
-    function ontouchend(ev) {
-        if (gamestate === 'jugando') { ev.preventDefault(); }
-    }
-
-    /*
-    Manejo de Orientacion
-    */
-    function tilt(ev) {
-        if (ev.gamma < 0) {
-            x = x - 2;
-        }
-        if (ev.gamma > 0) {
-            x = x + 2;
-        }
-        if (x < offset) {
-            x = offset;
-        }
-        if (x > width - offset) {
-            x = width - offset;
-        }
-    }
-
-    /*
     Manejo del Mouse
     */
+
     function onmousemove(ev) {
         var mx = ev.clientX - contenedor.offsetLeft;
         if (mx < offset) {
@@ -221,6 +200,7 @@
     /*
     Introduccion
     */
+
     function showintro() {
         setactual(principal);
         estadoDelJuego = 'principal';
@@ -232,18 +212,20 @@
     /*
     Instrucciones
     */
+
     function mostrarInstrucciones() {
         setactual(instrucciones);
         estadoDelJuego = 'instrucciones';
         now = 0;
-        caracteres[now].className = 'current';
+        personajes[now].className = 'current';
     }
 
     /*
     Accion cuando se activa Izquierda
     */
+
     function instruccionesListo() {
-        caracteres[now].className = 'dentrointrucciones';
+        personajes[now].className = 'dentrointrucciones';
         now = 0;
         showintro();
     }
@@ -251,19 +233,21 @@
     /*
     Accion cuando se activa Derecha
     */
+
     function instruccionesSiguiente() {
-        if (caracteres[now + 1]) {
+        if (personajes[now + 1]) {
             now = now + 1;
         }
-        if (caracteres[now]) {
-            caracteres[now - 1].className = 'dentrointrucciones';
-            caracteres[now].className = 'current';
+        if (personajes[now]) {
+            personajes[now - 1].className = 'dentrointrucciones';
+            personajes[now].className = 'current';
         }
     }
 
     /*
     Comienza el Juego
     */
+
     function startgame() {
         setactual(juego);
         estadoDelJuego = 'jugando';
@@ -289,12 +273,14 @@
     /*
     Bucle Pricipal del Juego
     */
+
     function loop() {
         ctx.clearRect(0, 0, width, height);
 
         /*
         Renderiza y actualiza Sprites
         */
+
         j = sprites.length;
         for (i = 0; i < j; i++) {
             sprites[i].render();
@@ -304,6 +290,7 @@
         /*
         Muestra Scores
         */
+
         muestraDulzura.innerHTML = scores.energy;
         muestraScore.innerHTML = ~~(score / 10);
         score++;
@@ -311,6 +298,7 @@
         /*
         Cuando aumenta Score agrega mas Sprites
         */
+
         if (~~(score / nuevoSprite) > levelincrease) {
             sprites.push(addsprite());
             levelincrease++;
@@ -319,6 +307,7 @@
         /*
         Posicion Jugador
         */
+
         if (rightdown) {
             playerright();
         }
@@ -333,7 +322,8 @@
 
         /*
           Cuando aun tienes dulzura, renderiza Siguiente instruccion, sino Juego Terminado
-         */
+        */
+
         scores.energy = Math.min(scores.energy, 100);
         if (scores.energy > 0) {
             requestAnimationFrame(loop);
@@ -346,6 +336,7 @@
     /*
     Accion cuando se activa la izquierda
     */
+
     function playerleft() {
         x -= playerincrease;
         if (x < offset) {
@@ -356,6 +347,7 @@
     /*
     Accion cuando se activa la derecha
     */
+
     function playerright() {
         x += playerincrease;
         if (x > width - offset) {
@@ -366,6 +358,7 @@
     /*
     Juego Terminado
     */
+
     function juegoterminado() {
         document.body.className = 'juegoterminado';
         setactual(terminado);
@@ -380,12 +373,9 @@
     }
 
     /*
-    Metodos de Ayuda
+    Sistema de Sprite de Personajes
     */
 
-    /*
-    Sistema de Particulas
-    */
     function sprite() {
         this.px = 0;
         this.py = 0;
@@ -453,6 +443,7 @@
     /*
     Seleccionador de Query
     */
+
     function $(str) {
         return document.querySelector(str);
     };
@@ -460,6 +451,7 @@
     /*
     Obtiene numero random entre un minimo y maximo
     */
+
     function rand(min, max) {
         return ((Math.random() * (max - min)) + min);
     };
@@ -478,6 +470,7 @@
     /*
     Detecta y Setea requestAnimationFrame
     */
+
     if (!window.requestAnimationFrame) {
         window.requestAnimationFrame = (function () {
             return window.webkitRequestAnimationFrame ||
@@ -493,6 +486,7 @@
     /*
     Ejecutar
     */
+
     init();
 })();
 
