@@ -135,7 +135,7 @@
     }
 
     /*
-    Manejo de Clicks que detecta la presion de un clik del mause el el menu inicial
+    Manejo de Clicks 
     */
 
     function onclick(ev) {
@@ -235,7 +235,7 @@
     }
 
     /*
-    Accion cuando se activa Derecha
+    Accion cuando se activa Derecha ahora
     */
 
     function instruccionesSiguiente() {
