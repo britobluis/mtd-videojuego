@@ -11,10 +11,10 @@
         muestraScore = $('#puntaje output'),
         muestraDulzura = $('#dulzura output'),
         canvas = $('canvas'),
-        over = $('#juegoterminado'),
-        msjGameOver = over.querySelector('.mensaje'),
+        terminado = $('#juegoterminado'),
+        msjjuegoterminado = terminado.querySelector('.mensaje'),
         caracteres = document.querySelectorAll('div.dentrointrucciones'),
-        c = canvas.getContext('2d'),
+        ctx = canvas.getContext('2d'),
         startenergy = +muestraDulzura.innerHTML;
 
     /*
@@ -132,7 +132,7 @@
     */
     function onclick(ev) {
         var t = ev.target;
-        if (estadoDelJuego === 'gameover') {
+        if (estadoDelJuego === 'juegoterminado') {
             if (t.id === 'jugardenuevo') {
                 showintro();
             }
@@ -291,7 +291,7 @@
     Bucle Pricipal del Juego
     */
     function loop() {
-        c.clearRect(0, 0, width, height);
+        ctx.clearRect(0, 0, width, height);
 
         /*
         Renderiza y actualiza Sprites
@@ -327,19 +327,19 @@
             playerleft();
         }
 
-        c.save();
-        c.translate(x - offset, playerY);
-        c.drawImage(player, 0, 0);
-        c.restore();
+        ctx.save();
+        ctx.translate(x - offset, playerY);
+        ctx.drawImage(player, 0, 0);
+        ctx.restore();
 
         /*
-          Cuando aun tienes dulzura, renderiza Siguiente instruccion, sino gameover
+          Cuando aun tienes dulzura, renderiza Siguiente instruccion, sino Juego Terminado
          */
         scores.energy = Math.min(scores.energy, 100);
         if (scores.energy > 0) {
             requestAnimationFrame(loop);
         } else {
-            gameover();
+            juegoterminado();
         }
 
     };
@@ -365,17 +365,17 @@
     }
 
     /*
-    Game over
+    Juego Terminado
     */
-    function gameover() {
-        document.body.className = 'gameover';
-        setactual(over);
-        estadoDelJuego = 'gameover';
+    function juegoterminado() {
+        document.body.className = 'juegoterminado';
+        setactual(terminado);
+        estadoDelJuego = 'juegoterminado';
         var nowscore = ~~(score / 10);
-        over.querySelector('output').innerHTML = nowscore;
+        terminado.querySelector('output').innerHTML = nowscore;
         scoresGuardados.last = nowscore;
         if (nowscore > scoresGuardados.high) {
-            msjGameOver.innerHTML = msjGameOver.getAttribute('data-highscore');
+            msjjuegoterminado.innerHTML = msjjuegoterminado.getAttribute('data-highscore');
             scoresGuardados.high = nowscore;
         }
         localStorage.html5catcher = JSON.stringify(scoresGuardados);
@@ -424,11 +424,11 @@
             }
         };
         this.render = function () {
-            c.save();
-            c.translate(this.px, this.py);
-            c.translate(this.width * -0.5, this.height * -0.5);
-            c.drawImage(this.img, 0, 0);
-            c.restore();
+            ctx.save();
+            ctx.translate(this.px, this.py);
+            ctx.translate(this.width * -0.5, this.height * -0.5);
+            ctx.drawImage(this.img, 0, 0);
+            ctx.restore();
         };
     };
 

@@ -39,7 +39,7 @@ body, html {
 
 .pantallamenu .titulo {
     margin: 0px 20px;
-    font-size: 1.6em;
+    font-size: 1.5em;
     font-weight: 300;
 }
 
@@ -119,6 +119,10 @@ body, html {
     -moz-transition: top 1s;
     -o-transition: top 1s;
     -ms-transition: top 1s;
+}
+
+.pantallamenu .descripcion b {
+    color: #223e65;
 }
 
 section {
