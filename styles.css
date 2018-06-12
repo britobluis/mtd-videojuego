@@ -1,3 +1,5 @@
+/* @media principal: para pantallas de tamaño standard de PC y laptops */
+
 * {
     margin: 0;
     padding: 0;
@@ -12,6 +14,13 @@ body, html {
     overflow: hidden;
 }
 
+/* Agregar fuente luckiestguy */
+
+@font-face {
+    font-family: 'luckiestguy';
+    src: url('Font/luckiestguy.ttf') format('truetype');
+}
+
 #contenedor {
     background-image: url("Assets/1.png");
     background-position: top;
@@ -20,14 +29,6 @@ body, html {
     width: 100%;
     outline: 0;
     overflow: hidden;
-}
-
-.pantallamenu {
-    display: flex;
-    margin-top: 75px;
-    flex-direction: column;
-    text-align: center;
-    justify-content: center;
 }
 
 /* Bloque de animación de personaje para que camine a la derecha */
@@ -59,7 +60,6 @@ body, html {
     background-image: url("Assets/flecha_derecha.png");
     height: 64px;
     width: 64px;
-    margin-left: 20px;
 }
 
 /* Bloque de animación de personaje para que camine a la izquierda */
@@ -74,7 +74,6 @@ body, html {
     background-image: url("Assets/luis_izquierda.png");
     height: 64px;
     width: 57px;
-    margin-left: 20px;
     animation: caminaizquierda 1s steps(4) infinite;
 }
 
@@ -88,6 +87,35 @@ body, html {
     background-image: url("Assets/flecha_izquierda.png");
     height: 64px;
     width: 64px;
+}
+
+.pantallamenu {
+    display: flex;
+    margin-top: 50px;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+}
+
+.pantallamenu .audiodiv {
+    display: flex;
+    margin: 0px !important;
+    padding-right: 50px;
+    flex-direction: row;
+    justify-content: flex-end;
+    cursor: pointer;
+}
+
+.pantallamenu .audioon {
+    background-image: url("Assets/audio_on.png");
+    width: 60px;
+    height: 60px;
+}
+
+.pantallamenu .audiomute {
+    background-image: url("Assets/audio_mute.png");
+    width: 60px;
+    height: 60px;
 }
 
 .pantallamenu div {
@@ -119,6 +147,7 @@ body, html {
 }
 
 .pantallamenu .puntaje {
+    display: flex;
     background-color: #f14c38;
     margin: 10px 50px;
     padding: 10px 0px;
@@ -127,6 +156,7 @@ body, html {
     border: 3px solid;
     border-color: #f4f1e0;
     flex-direction: row;
+    justify-content: center;
 }
 
 .pantallamenu .puntaje .espaciado {
@@ -176,6 +206,8 @@ body, html {
     height: 100%;
     top: -900px;
 }
+
+/* Transición que da el efecto de aparecer desde arriba */
 
 #juego.current, #juegoterminado.current, #instrucciones.current, #principal.current {
     top: 0;
@@ -262,9 +294,52 @@ canvas {
     -ms-transition: 1s ease-in-out;
 }
 
-/* Agregar fuente descargada localmente */
+/* @media responsiva: para pantallas de tamaño standard (width: 480px) de celulares y tablets */
 
-@font-face {
-    font-family: 'luckiestguy';
-    src: url('Font/luckiestguy.ttf') format('truetype');
+@media (max-width: 480px) {
+    .audiodiv img {
+        width: 45px;
+        height: 45px;
+    }
+    .pantallamenu {
+        margin-top: 20px;
+    }
+    .pantallamenu div {
+        margin-top: 15px;
+    }
+    .pantallamenu .audiodiv {
+        padding-right: 25px;
+        margin: 0px !important;
+    }
+    .pantallamenu .grantitulo span {
+        font-size: 2.2em;
+    }
+    .pantallamenu .grantitulo p {
+        font-size: 1em;
+    }
+    .pantallamenu .puntaje {
+        margin: 5px 20px;
+        padding: 5px;
+        font-size: 1.2em;
+    }
+    .pantallamenu .puntaje .espaciado {
+        margin-right: 0px;
+    }
+    .pantallamenu .descripcion {
+        font-size: 0.9em;
+        margin: 0px 5px;
+    }
+    .pantallamenu .botones button {
+        width: 300px;
+        margin-bottom: 10px;
+        font-size: 1.1em;
+    }
+    #dulzura, #puntaje {
+        padding-left: 10px;
+        font-size: 1.2em;
+    }
+    .mensaje {
+        margin: 5px 0px;
+        font-size: 1.2em;
+    }
 }

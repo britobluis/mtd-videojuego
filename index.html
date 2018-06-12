@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -10,11 +10,18 @@
 
 <body>
 
+    <!-- Música del juego -->
+    <audio autoplay src="Music/pixel_adventures.mp3" id="audio" loop></audio>
+
     <div id="contenedor">
 
+        <!-- Sección Menú Principal -->
         <section id="principal">
 
             <div class="pantallamenu">
+                <div class="audiodiv">
+                    <img src="Assets/audio_on.png" id="audioico" onclick="activaDesactivaAudio();">
+                </div>
                 <div class="grantitulo">
                     <span>El Papá de los Helados 2.0</span>
                     <p>¡Recolecta todos los helados que caen... y conviértete en el Papá de los Helados!</p>
@@ -37,6 +44,8 @@
 
         </section>
 
+        <!-- Sección Instrucciones -->
+        
         <section id="instrucciones">
 
             <div id="personajes" data-countstart="2" data-newsprite="500">
@@ -80,12 +89,11 @@
                                 <div class="flechaderecha"></div>
                             </div>
                             <div class="izquierda">
-                                <div id="flechaizquierda"></div>
-                                <div class="luisizquierda"></div>
+                                <div class="flechaizquierda"></div>
+                                <div id="luisizquierda"></div>
                             </div>
                         </div>
                         <div class="descripcion">
-                            <!-- HACK: VER SI VA EL MOUSE O NO -->
                             <br>Utiliza el mouse o teclado para moverte.</p>
                         </div>
                         <div class="botones">
@@ -137,6 +145,8 @@
 
         </section>
 
+        <!-- Sección Juego -->
+
         <section id="juego">
 
             <div id="puntajeinfo">
@@ -155,6 +165,8 @@
             </div>
 
         </section>
+
+        <!-- Sección Juego Terminado -->
 
         <section id="juegoterminado">
 
