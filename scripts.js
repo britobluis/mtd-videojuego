@@ -92,14 +92,13 @@
         contenedor.addEventListener('touchstart', ontouchstart, false);
         contenedor.addEventListener('touchend', ontouchend, false);
         contenedor.addEventListener('click', onclick, false);
-        // contenedor.addEventListener('mousemove', onmousemove, false);
+        contenedor.addEventListener('mousemove', onmousemove, false);
         window.addEventListener('deviceorientation', tilt, false);
 
         /*
-        Trae el Score del juego o lo resetea si no hay ninguno
+        scoreGuardados sirve para guardar los últimos puntajes obtenidos
         */
         scoresGuardados = { last: 0, high: 0 };
-        localStorage.html5catcher = JSON.stringify(scoresGuardados);
 
         /*
         Muestra la introduccion
@@ -208,16 +207,16 @@
     /*
     Manejo del Mouse
     */
-    // function onmousemove(ev) {
-    //     var mx = ev.clientX - contenedor.offsetLeft;
-    //     if (mx < offset) {
-    //         mx = offset;
-    //     }
-    //     if (mx > width - offset) {
-    //         mx = width - offset;
-    //     }
-    //     x = mx;
-    // }
+    function onmousemove(ev) {
+        var mx = ev.clientX - contenedor.offsetLeft;
+        if (mx < offset) {
+            mx = offset;
+        }
+        if (mx > width - offset) {
+            mx = width - offset;
+        }
+        x = mx;
+    }
 
     /*
     Introduccion
@@ -378,7 +377,6 @@
             msjjuegoterminado.innerHTML = msjjuegoterminado.getAttribute('data-highscore');
             scoresGuardados.high = nowscore;
         }
-        localStorage.html5catcher = JSON.stringify(scoresGuardados);
     }
 
     /*
@@ -497,6 +495,24 @@
     */
     init();
 })();
+
 /*
-Fin del juego
+Función para activar/desactivar el audio
 */
+
+var cambiaicoaudio = 0,
+    audio = document.getElementById("audio");
+
+function activaDesactivaAudio() {
+
+    if (cambiaicoaudio == 0) {
+        document.getElementById("audioico").setAttribute('src', 'Assets/audio_mute.png');
+        cambiaicoaudio++;
+        audio.pause();
+    }
+    else {
+        document.getElementById("audioico").setAttribute('src', 'Assets/audio_on.png');
+        cambiaicoaudio--;
+        audio.play();
+    }
+}
