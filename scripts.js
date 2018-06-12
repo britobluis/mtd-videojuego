@@ -54,7 +54,11 @@
     */
 
     function init() {
-        var actual, sprdata, informacionpuntaje, i, j;
+        var actual,
+        sprdata,
+        informacionpuntaje,
+        i,
+        j;
 
         /*
         Trae el Sprite del HTML
