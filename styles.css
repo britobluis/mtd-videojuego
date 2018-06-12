@@ -30,11 +30,68 @@ body, html {
     justify-content: center;
 }
 
-.pantallamenu div {
+/* Bloque de animación de personaje para que camine a la derecha */
+
+.derecha {
     display: flex;
+    flex-direction: row;
+    margin: 0px !important;
+}
+
+#luisderecha {
+    background-image: url("Assets/luis_derecha.png");
+    height: 64px;
+    width: 57px;
+    animation: caminaderecha 1s steps(4) infinite;
+    -ms-animation: caminaderecha 1s steps(4) infinite;
+    -webkit-animation: caminaderecha 1s steps(4) infinite;
+    -moz-animation: caminaderecha 1s steps(4) infinite;
+    -o-animation: caminaderecha 1s steps(4) infinite;
+}
+
+@keyframes caminaderecha {
+    100% {
+        background-position: -228px;
+    }
+}
+
+.flechaderecha {
+    background-image: url("Assets/flecha_derecha.png");
+    height: 64px;
+    width: 64px;
+    margin-left: 20px;
+}
+
+/* Bloque de animación de personaje para que camine a la izquierda */
+
+.izquierda {
+    display: flex;
+    flex-direction: row;
+    margin: 0px !important;
+}
+
+#luisizquierda {
+    background-image: url("Assets/luis_izquierda.png");
+    height: 64px;
+    width: 57px;
+    margin-left: 20px;
+    animation: caminaizquierda 1s steps(4) infinite;
+}
+
+@keyframes caminaizquierda {
+    100% {
+        background-position: -228px;
+    }
+}
+
+.flechaizquierda {
+    background-image: url("Assets/flecha_izquierda.png");
+    height: 64px;
+    width: 64px;
+}
+
+.pantallamenu div {
     margin: 20px 0px;
-    align-items: center;
-    justify-content: center;
 }
 
 .pantallamenu .titulo {
@@ -56,15 +113,15 @@ body, html {
 
 .pantallamenu .grantitulo p {
     padding: 0px 20px;
-    font-size: 1.4em;
+    font-size: 1.2em;
     font-weight: 200;
     color: #180f2a;
 }
 
 .pantallamenu .puntaje {
     background-color: #f14c38;
-    margin: 30px 50px;
-    padding: 20px 0px;
+    margin: 10px 50px;
+    padding: 10px 0px;
     font-size: 1.5em;
     color: #f4f1e0;
     border: 3px solid;
@@ -76,12 +133,21 @@ body, html {
     margin-right: 20px;
 }
 
+.pantallamenu .imagenesdirecciones {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0px !important;
+}
+
 .pantallamenu .imagenes img {
     margin: 0px 10px;
 }
 
 .pantallamenu .botones {
+    display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 .pantallamenu .botones button {
@@ -136,7 +202,7 @@ section {
 
 #personajes div.dentrointrucciones {
     position: absolute;
-    left: -9000px;
+    top: -900px;
     opacity: 0;
     transition: opacity 1s;
 }
@@ -200,5 +266,5 @@ canvas {
 
 @font-face {
     font-family: 'luckiestguy';
-    src: url('luckiestguy.ttf') format('truetype');
+    src: url('Font/luckiestguy.ttf') format('truetype');
 }

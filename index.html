@@ -12,9 +12,6 @@
 
     <div id="contenedor">
 
-        <div class="background">
-
-        </div>
         <section id="principal">
 
             <div class="pantallamenu">
@@ -52,7 +49,7 @@
                             </p>
                         </div>
                         <div class="imagenes">
-                            <img src="Assets/Luis.png" id="jugador" data-increase="5">
+                            <img src="Assets/Luis.png" id="luis" data-increase="5">
                         </div>
                         <div class="descripcion">
                             <p>Quieres convertirte en el
@@ -77,10 +74,18 @@
                                 <b>Cómo jugar:</b>
                             </p>
                         </div>
-                        <div class="imagenes">
-                            <img src="Assets/Luis.png">
+                        <div class="imagenesdirecciones">
+                            <div class="derecha">
+                                <div id="luisderecha"></div>
+                                <div class="flechaderecha"></div>
+                            </div>
+                            <div class="izquierda">
+                                <div id="flechaizquierda"></div>
+                                <div class="luisizquierda"></div>
+                            </div>
                         </div>
                         <div class="descripcion">
+                            <!-- HACK: VER SI VA EL MOUSE O NO -->
                             <br>Utiliza el mouse o teclado para moverte.</p>
                         </div>
                         <div class="botones">
@@ -95,14 +100,14 @@
                                 <b>Helados:</b>
                             </p>
                         </div>
+                        <div class="imagenes">
+                            <img src="Assets/helado_1.png" class="sprite" data-collision="energy:20" data-type="bueno">
+                            <img src="Assets/helado_2.png" class="sprite" data-collision="energy:20" data-type="bueno">
+                            <img src="Assets/helado_3.png" class="sprite" data-collision="energy:20" data-type="bueno">
+                        </div>
                         <div class="descripcion">
                             <p>Atrapar alguno te dará 20 puntos de dulzura.
                                 <br> En caso de no lograrlo... ¡perderás 20 puntos!</p>
-                        </div>
-                        <div class="imagenes">
-                            <img src="Assets/ice-cream.png" class="sprite" data-collision="energy:20" data-type="bueno">
-                            <img src="Assets/ice-cream2.png" class="sprite" data-collision="energy:20" data-type="bueno">
-                            <img src="Assets/ice-cream3.png" class="sprite" data-collision="energy:20" data-type="bueno">
                         </div>
                         <div class="botones">
                             <button class="proximo">Más</button>
@@ -116,11 +121,11 @@
                                 <b>Brócoli:</b>
                             </p>
                         </div>
-                        <div class="descripcion">
-                            <p>Si por error lo atrapas, te quitará 50 puntos dulzura.</p>
-                        </div>
                         <div class="imagenes">
                             <img src="Assets/broccoli.png" class="sprite" data-collision="energy:-50" data-type="malo">
+                        </div>
+                        <div class="descripcion">
+                            <p>Si por error lo atrapas, te quitará 50 puntos dulzura.</p>
                         </div>
                         <div class="botones">
                             <button class="endinstructions">Volver al menú</button>

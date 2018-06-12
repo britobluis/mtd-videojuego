@@ -5,7 +5,7 @@
     */
     var contenedor = $('#contenedor'),
         juego = $('#juego'),
-        player = $('#jugador'),
+        player = $('#luis'),
         principal = $('#principal'),
         instrucciones = $('#instrucciones'),
         muestraScore = $('#puntaje output'),
