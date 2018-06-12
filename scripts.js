@@ -3,23 +3,25 @@
     /*
     Elementos del DOM
     */
+
     var contenedor = $('#contenedor'),
         juego = $('#juego'),
-        player = $('#jugador'),
+        player = $('#luis'),
         principal = $('#principal'),
         instrucciones = $('#instrucciones'),
         muestraScore = $('#puntaje output'),
         muestraDulzura = $('#dulzura output'),
         canvas = $('canvas'),
-        over = $('#juegoterminado'),
-        msjGameOver = over.querySelector('.mensaje'),
-        caracteres = document.querySelectorAll('div.dentrointrucciones'),
-        c = canvas.getContext('2d'),
+        terminado = $('#juegoterminado'),
+        msjjuegoterminado = terminado.querySelector('.mensaje'),
+        personajes = document.querySelectorAll('div.dentrointrucciones'),
+        ctx = canvas.getContext('2d'),
         startenergy = +muestraDulzura.innerHTML;
 
     /*
     Datos del Juego
     */
+
     var scores = {
         energy: startenergy
     },
@@ -28,23 +30,25 @@
     /*
     Contadores
     */
+
     var score = 0,
-    estadoDelJuego = null,
-    x = 0,
-    sprites = [],
-    listaSprites = [],
-    contadorSprite = 0,
-    now = 0,
-    viejo = null,
-    playerY = 0,
-    offset = 0,
-    width = 0, height = 0,
-    levelincrease = 0, i = 0,
-    scoresGuardados = null,
-    initsprites = 0,
-    nuevoSprite = 500,
-    rightdown = false,
-    leftdown = false;
+        estadoDelJuego = null,
+        x = 0,
+        sprites = [],
+        listaSprites = [],
+        contadorSprite = 0,
+        now = 0,
+        viejo = null,
+        playerY = 0,
+        offset = 0,
+        width = 0, height = 0,
+        levelincrease = 0, i = 0,
+        scoresGuardados = null,
+        initsprites = 0,
+        nuevoSprite = 500,
+        rightdown = false,
+        leftdown = false;
+
     /*
     Configuracion del juego
     */
@@ -55,10 +59,10 @@
         /*
         Trae el Sprite del HTML
         */
+
         sprdata = document.querySelectorAll('img.sprite');
         i = sprdata.length;
-        while (i--)
-        {
+        while (i--) {
             actual = {};
             actual.effects = [];
             actual.img = sprdata[i];
@@ -90,37 +94,29 @@
         */
         contenedor.addEventListener('keydown', onkeydown, false);
         contenedor.addEventListener('keyup', onkeyup, false);
-        contenedor.addEventListener('touchstart', ontouchstart, false);
-        contenedor.addEventListener('touchend', ontouchend, false);
         contenedor.addEventListener('click', onclick, false);
-        // contenedor.addEventListener('mousemove', onmousemove, false);
-        window.addEventListener('deviceorientation', tilt, false);
+        contenedor.addEventListener('mousemove', onmousemove, false);
 
         /*
-        Trae el Score del juego o lo resetea si no hay ninguno
+        scoreGuardados sirve para guardar los últimos puntajes obtenidos
         */
-        if (localStorage.html5catcher)
-        {
-            scoresGuardados = JSON.parse(localStorage.html5catcher);
-        }
-        else
-        {
-            scoresGuardados = { last: 0, high: 0 };
-            localStorage.html5catcher = JSON.stringify(scoresGuardados);
-        }
+
+        scoresGuardados = { last: 0, high: 0 };
 
         /*
         Muestra la introduccion
         */
+
         showintro();
 
     };
 
     /*
     Función para cambiar el background durante el juego
+    almacena en una array los diferentes assets de fondo de pantalla del juego
     */
 
-    function cambiaBackground(){
+    function cambiaBackground() {
         var images = ['Assets/2.png', 'Assets/3.png', 'Assets/4.png', 'Assets/5.png', 'Assets/6.png', 'Assets/7.png', 'Assets/8.png']
 
         setInterval(function () {
@@ -130,38 +126,33 @@
             var firstValue = images.shift();
             images.push(firstValue);
 
-
         }, 12000);
 
     }
 
     /*
-    Manejo de Clicks
+    Manejo de Clicks que detecta la presion de un clik del mause el el menu inicial
     */
+
     function onclick(ev) {
         var t = ev.target;
-        if (estadoDelJuego === 'gameover')
-        {
+        if (estadoDelJuego === 'juegoterminado') {
             if (t.id === 'jugardenuevo') {
                 showintro();
             }
         }
-        if (t.className === 'proximo')
-        {
+        if (t.className === 'proximo') {
             instruccionesSiguiente();
         }
-        if (t.className === 'endinstructions')
-        {
+        if (t.className === 'endinstructions') {
             instruccionesListo();
         }
-        if (t.id === 'botoninstrucciones')
-        {
+        if (t.id === 'botoninstrucciones') {
             mostrarInstrucciones();
         }
-        if (t.id === 'botonjugar')
-        {
+        if (t.id === 'botonjugar') {
             startgame(),
-            cambiaBackground();
+                cambiaBackground();
         }
         ev.preventDefault();
     }
@@ -169,77 +160,47 @@
     /*
     Manejo de Teclado
     */
+
     function onkeydown(ev) {
-        // Detecta el evento de que el usuario está utilizando el teclado, y compara con los códigos ASCII del teclado para asignarle la función que corresponda
-        if (ev.keyCode === 39)
-        {
+        /*
+        Detecta el evento de que el usuario está utilizando el teclado
+        y compara con los códigos ASCII del teclado para asignarle la función que corresponda
+        */
+        if (ev.keyCode === 39) {
             rightdown = true;
         }
-        else if (ev.keyCode === 37)
-        {
+        else if (ev.keyCode === 37) {
             leftdown = true;
         }
     }
     function onkeyup(ev) {
-        if (ev.keyCode === 39)
-        {
+        if (ev.keyCode === 39) {
             rightdown = false;
         }
-        else if (ev.keyCode === 37)
-        {
+        else if (ev.keyCode === 37) {
             leftdown = false;
-        }
-    }
-
-    /*
-    Manejo de Touch Screen
-    */
-    function ontouchstart(ev) {
-        if (gamestate === 'jugando') { ev.preventDefault(); }
-    }
-    function ontouchend(ev) {
-        if (gamestate === 'jugando') { ev.preventDefault(); }
-    }
-
-    /*
-    Manejo de Orientacion
-    */
-    function tilt(ev) {
-        if (ev.gamma < 0)
-        {
-            x = x - 2;
-        }
-        if (ev.gamma > 0)
-        {
-            x = x + 2;
-        }
-        if (x < offset)
-        {
-            x = offset;
-        }
-        if (x > width - offset)
-        {
-            x = width - offset;
         }
     }
 
     /*
     Manejo del Mouse
     */
-    // function onmousemove(ev) {
-    //     var mx = ev.clientX - contenedor.offsetLeft;
-    //     if (mx < offset) {
-    //         mx = offset;
-    //     }
-    //     if (mx > width - offset) {
-    //         mx = width - offset;
-    //     }
-    //     x = mx;
-    // }
+
+    function onmousemove(ev) {
+        var mx = ev.clientX - contenedor.offsetLeft;
+        if (mx < offset) {
+            mx = offset;
+        }
+        if (mx > width - offset) {
+            mx = width - offset;
+        }
+        x = mx;
+    }
 
     /*
     Introduccion
     */
+
     function showintro() {
         setactual(principal);
         estadoDelJuego = 'principal';
@@ -249,20 +210,22 @@
     }
 
     /*
-    Instrucciones
+    muestra las instrucciones para jugarlo
     */
+
     function mostrarInstrucciones() {
         setactual(instrucciones);
         estadoDelJuego = 'instrucciones';
         now = 0;
-        caracteres[now].className = 'current';
+        personajes[now].className = 'current';
     }
-
+    /*movimientos del personaje*/
     /*
     Accion cuando se activa Izquierda
     */
+
     function instruccionesListo() {
-        caracteres[now].className = 'dentrointrucciones';
+        personajes[now].className = 'dentrointrucciones';
         now = 0;
         showintro();
     }
@@ -270,21 +233,21 @@
     /*
     Accion cuando se activa Derecha
     */
+
     function instruccionesSiguiente() {
-        if (caracteres[now + 1])
-        {
+        if (personajes[now + 1]) {
             now = now + 1;
         }
-        if (caracteres[now])
-        {
-            caracteres[now - 1].className = 'dentrointrucciones';
-            caracteres[now].className = 'current';
+        if (personajes[now]) {
+            personajes[now - 1].className = 'dentrointrucciones';
+            personajes[now].className = 'current';
         }
     }
-
+    /*startgame prepara el juego para comezar y setea los valores
     /*
     Comienza el Juego
     */
+
     function startgame() {
         setactual(juego);
         estadoDelJuego = 'jugando';
@@ -297,8 +260,7 @@
         offset = player.offsetWidth / 2;
         x = width / 2;
         sprites = [];
-        for (i = 0; i < initsprites; i++)
-        {
+        for (i = 0; i < initsprites; i++) {
             sprites.push(addsprite());
         }
         scores.energy = startenergy;
@@ -309,17 +271,18 @@
     }
 
     /*
-    Bucle Pricipal del Juego
+    Bucle Principal del Juego
     */
+
     function loop() {
-        c.clearRect(0, 0, width, height);
+        ctx.clearRect(0, 0, width, height);
 
         /*
         Renderiza y actualiza Sprites
         */
+
         j = sprites.length;
-        for (i = 0; i < j; i++)
-        {
+        for (i = 0; i < j; i++) {
             sprites[i].render();
             sprites[i].update();
         }
@@ -327,6 +290,7 @@
         /*
         Muestra Scores
         */
+
         muestraDulzura.innerHTML = scores.energy;
         muestraScore.innerHTML = ~~(score / 10);
         score++;
@@ -334,8 +298,8 @@
         /*
         Cuando aumenta Score agrega mas Sprites
         */
-        if (~~(score / nuevoSprite) > levelincrease)
-        {
+
+        if (~~(score / nuevoSprite) > levelincrease) {
             sprites.push(addsprite());
             levelincrease++;
         }
@@ -343,28 +307,28 @@
         /*
         Posicion Jugador
         */
-        if (rightdown)
-        {
+
+        if (rightdown) {
             playerright();
         }
-        if (leftdown)
-        {
+        if (leftdown) {
             playerleft();
         }
 
-        c.save();
-        c.translate(x - offset, playerY);
-        c.drawImage(player, 0, 0);
-        c.restore();
+        ctx.save();
+        ctx.translate(x - offset, playerY);
+        ctx.drawImage(player, 0, 0);
+        ctx.restore();
 
         /*
-          Cuando aun tienes dulzura, renderiza Siguiente instruccion, sino gameover
-         */
+          Cuando aun tienes dulzura, renderiza Siguiente instruccion, sino Juego Terminado
+        */
+
         scores.energy = Math.min(scores.energy, 100);
         if (scores.energy > 0) {
             requestAnimationFrame(loop);
         } else {
-            gameover();
+            juegoterminado();
         }
 
     };
@@ -372,6 +336,7 @@
     /*
     Accion cuando se activa la izquierda
     */
+
     function playerleft() {
         x -= playerincrease;
         if (x < offset) {
@@ -382,38 +347,35 @@
     /*
     Accion cuando se activa la derecha
     */
+
     function playerright() {
         x += playerincrease;
-        if (x > width - offset)
-        {
+        if (x > width - offset) {
             x = width - offset;
         }
     }
 
     /*
-    Game over
+    Juego Terminado
     */
-    function gameover() {
-        document.body.className = 'gameover';
-        setactual(over);
-        estadoDelJuego = 'gameover';
+
+    function juegoterminado() {
+        document.body.className = 'juegoterminado';
+        setactual(terminado);
+        estadoDelJuego = 'juegoterminado';
         var nowscore = ~~(score / 10);
-        over.querySelector('output').innerHTML = nowscore;
+        terminado.querySelector('output').innerHTML = nowscore;
         scoresGuardados.last = nowscore;
         if (nowscore > scoresGuardados.high) {
-            msjGameOver.innerHTML = msjGameOver.getAttribute('data-highscore');
+            msjjuegoterminado.innerH9TML = msjjuegoterminado.getAttribute('data-highscore');
             scoresGuardados.high = nowscore;
         }
-        localStorage.html5catcher = JSON.stringify(scoresGuardados);
     }
 
     /*
-    Metodos de Ayuda
+    Sistema de Sprite de Personajes
     */
 
-    /*
-    Sistema de Particulas
-    */
     function sprite() {
         this.px = 0;
         this.py = 0;
@@ -431,19 +393,16 @@
                 if ((x - offset) < this.px && this.px < (x + offset)) {
                     this.py = -200;
                     i = this.effects.length;
-                    while (i--)
-                    {
+                    while (i--) {
                         scores[this.effects[i].effect] += +this.effects[i].value;
                     }
                 }
             }
-            if (this.px > (width - this.offset) || this.px < this.offset)
-            {
+            if (this.px > (width - this.offset) || this.px < this.offset) {
                 this.vx = -this.vx;
             }
             if (this.py > height + 100) {
-                if (this.type === 'bueno')
-                {
+                if (this.type === 'bueno') {
                     i = this.effects.length;
                     while (i--) {
                         scores[this.effects[i].effect] -= +this.effects[i].value;
@@ -452,13 +411,12 @@
                 setspritedata(this);
             }
         };
-        this.render = function ()
-        {
-            c.save();
-            c.translate(this.px, this.py);
-            c.translate(this.width * -0.5, this.height * -0.5);
-            c.drawImage(this.img, 0, 0);
-            c.restore();
+        this.render = function () {
+            ctx.save();
+            ctx.translate(this.px, this.py);
+            ctx.translate(this.width * -0.5, this.height * -0.5);
+            ctx.drawImage(this.img, 0, 0);
+            ctx.restore();
         };
     };
 
@@ -467,9 +425,11 @@
         setspritedata(s);
         return s;
     };
+    /*
+    funcion que obtiene los sprites para ostrarlos por pantalla
+    */
 
-    function setspritedata(sprite)
-    {
+    function setspritedata(sprite) {
         var r = ~~rand(0, contadorSprite);
         sprite.img = listaSprites[r].img;
         sprite.height = sprite.img.offsetHeight;
@@ -486,6 +446,7 @@
     /*
     Seleccionador de Query
     */
+
     function $(str) {
         return document.querySelector(str);
     };
@@ -493,6 +454,7 @@
     /*
     Obtiene numero random entre un minimo y maximo
     */
+
     function rand(min, max) {
         return ((Math.random() * (max - min)) + min);
     };
@@ -511,6 +473,7 @@
     /*
     Detecta y Setea requestAnimationFrame
     */
+
     if (!window.requestAnimationFrame) {
         window.requestAnimationFrame = (function () {
             return window.webkitRequestAnimationFrame ||
@@ -526,8 +489,27 @@
     /*
     Ejecutar
     */
+
     init();
 })();
+
 /*
-Fin del juego
+Función para activar/desactivar el audio
 */
+
+var cambiaicoaudio = 0,
+    audio = document.getElementById("audio");
+
+function activaDesactivaAudio() {
+
+    if (cambiaicoaudio == 0) {
+        document.getElementById("audioico").setAttribute('src', 'Assets/audio_mute.png');
+        cambiaicoaudio++;
+        audio.pause();
+    }
+    else {
+        document.getElementById("audioico").setAttribute('src', 'Assets/audio_on.png');
+        cambiaicoaudio--;
+        audio.play();
+    }
+}
