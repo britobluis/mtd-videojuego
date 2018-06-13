@@ -18,11 +18,11 @@
         <!-- Sección Menú Principal -->
         <section id="principal">
 
-            <div class="pantallamenu">
-                <div class="audiodiv">
-                    <img src="Assets/audio_on.png" id="audioico" onclick="activaDesactivaAudio();">
+            <div class="pantalla-menu">
+                <div class="audio-div">
+                    <img src="Assets/audio_on.png" id="audio-ico" onclick="toggleAudio();">
                 </div>
-                <div class="grantitulo">
+                <div class="gran-titulo">
                     <span>El Papá de los Helados 2.0</span>
                     <p>¡Recolecta todos los helados que caen... y conviértete en el Papá de los Helados!</p>
                 </div>
@@ -37,10 +37,10 @@
                     </div>
                 </div>
                 <div class="botones">
-                    <button id="botoninstrucciones">Instrucciones</button>
-                    <button id="botonjugar">Jugar</button>
+                    <button id="boton-instrucciones">Instrucciones</button>
+                    <button id="boton-jugar">Jugar</button>
                 </div>
-                <div class="copyleftdiv">
+                <div class="copyleft-div">
                     <div id="copyleft">
                         <span class="copyright">Copy
                             <span>right</span>
@@ -59,8 +59,8 @@
 
             <div id="personajes" data-countstart="2" data-newsprite="500">
 
-                <div class="dentroinstrucciones">
-                    <div class="pantallamenu">
+                <div class="dentro-instrucciones">
+                    <div class="pantalla-menu">
                         <div class="titulo">
                             <p>
                                 <b>Eres Luis:</b>
@@ -85,21 +85,21 @@
                         </div>
                     </div>
                 </div>
-                <div class="dentroinstrucciones">
-                    <div class="pantallamenu">
+                <div class="dentro-instrucciones">
+                    <div class="pantalla-menu">
                         <div class="titulo">
                             <p>
                                 <b>Cómo jugar:</b>
                             </p>
                         </div>
-                        <div class="imagenesdirecciones">
+                        <div class="imagenes-direcciones">
                             <div class="derecha">
-                                <div id="luisderecha"></div>
-                                <div class="flechaderecha"></div>
+                                <div id="luis-derecha"></div>
+                                <div class="flecha-derecha"></div>
                             </div>
                             <div class="izquierda">
-                                <div class="flechaizquierda"></div>
-                                <div id="luisizquierda"></div>
+                                <div class="flecha-izquierda"></div>
+                                <div id="luis-izquierda"></div>
                             </div>
                         </div>
                         <div class="descripcion">
@@ -110,8 +110,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="dentroinstrucciones">
-                    <div class="pantallamenu">
+                <div class="dentro-instrucciones">
+                    <div class="pantalla-menu">
                         <div class="titulo">
                             <p>
                                 <b>Helados:</b>
@@ -131,8 +131,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="dentroinstrucciones">
-                    <div class="pantallamenu">
+                <div class="dentro-instrucciones">
+                    <div class="pantalla-menu">
                         <div class="titulo">
                             <p>
                                 <b>Brócoli:</b>
@@ -145,7 +145,7 @@
                             <p>Si por error lo atrapas, te quitará 50 puntos dulzura.</p>
                         </div>
                         <div class="botones">
-                            <button class="fininstrucciones">Volver al menú</button>
+                            <button class="fin-instrucciones">Volver al menú</button>
                         </div>
                     </div>
                 </div>
@@ -158,7 +158,7 @@
 
         <section id="juego">
 
-            <div id="puntajeinfo">
+            <div id="puntaje-info">
                 <div id="dulzura">Dulzura:&nbsp
                     <output>
                         100
@@ -169,7 +169,7 @@
                     </output>
                 </div>
             </div>
-            <div id="cambiabackground">
+            <div id="cambia-background">
                 <canvas></canvas>
             </div>
 
@@ -177,9 +177,9 @@
 
         <!-- Sección Juego Terminado -->
 
-        <section id="juegoterminado">
+        <section id="juego-terminado">
 
-            <div class="pantallamenu">
+            <div class="pantalla-menu">
                 <div class="titulo">
                     <p>¡Juego Terminado!</p>
                 </div>
@@ -191,7 +191,7 @@
                     <p class="mensaje" data-highscore="¡Nuevo Puntaje Máximo!"></p>
                 </div>
                 <div class="botones">
-                    <button id="jugardenuevo">Jugar de nuevo</button>
+                    <button id="jugar-de-nuevo">Jugar de nuevo</button>
                 </div>
             </div>
 

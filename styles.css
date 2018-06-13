@@ -35,7 +35,7 @@ section {
     display: block;
 }
 
-#juego, #juegoterminado, #instrucciones, #principal {
+#juego, #juego-terminado, #instrucciones, #principal {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -44,7 +44,7 @@ section {
 
 /* Transición que da el efecto de aparecer desde arriba */
 
-#juego.current, #juegoterminado.current, #instrucciones.current, #principal.current {
+#juego.current, #juego-terminado.current, #instrucciones.current, #principal.current {
     top: 0;
     transition: top 1s;
     /* Para compatibilidad con mayoría de navegadores */
@@ -54,7 +54,7 @@ section {
     -ms-transition: top 1s;
 }
 
-.pantallamenu {
+.pantalla-menu {
     display: flex;
     margin-top: 30px;
     flex-direction: column;
@@ -62,11 +62,13 @@ section {
     justify-content: center;
 }
 
-.pantallamenu div {
+.pantalla-menu div {
     margin: 20px 0px;
 }
 
-.pantallamenu .audiodiv {
+/* Estilos del botón del audio */
+
+.pantalla-menu .audio-div {
     display: flex;
     margin: 0px !important;
     padding-right: 50px;
@@ -75,25 +77,25 @@ section {
     cursor: pointer;
 }
 
-.pantallamenu .grantitulo {
+.pantalla-menu .gran-titulo {
     display: flex;
     flex-direction: column;
 }
 
-.pantallamenu .grantitulo span {
+.pantalla-menu .gran-titulo span {
     font-size: 2.4em;
     font-weight: 500;
     color: #223e65;
 }
 
-.pantallamenu .grantitulo p {
+.pantalla-menu .gran-titulo p {
     padding: 0px 20px;
     font-size: 1.2em;
     font-weight: 200;
     color: #180f2a;
 }
 
-.pantallamenu .puntaje {
+.pantalla-menu .puntaje {
     display: flex;
     background-color: #f14c38;
     margin: 10px 50px;
@@ -106,17 +108,19 @@ section {
     justify-content: center;
 }
 
-.pantallamenu .puntaje .espaciado {
+.pantalla-menu .puntaje .espaciado {
     margin-right: 20px;
 }
 
-.pantallamenu .botones {
+/* Estilos de los botones */
+
+.pantalla-menu .botones {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.pantallamenu .botones button {
+.pantalla-menu .botones button {
     background: #f4f1e0;
     width: 350px;
     font-family: luckiestguy, Verdana, Tahoma, sans-serif;
@@ -129,7 +133,7 @@ section {
 
 /* Agregar efecto al colocar cursor sobre botones */
 
-.pantallamenu .botones button:hover {
+.pantalla-menu .botones button:hover {
     background-color: #180f2a;
     color: #f4f1e0;
     cursor: pointer;
@@ -138,7 +142,7 @@ section {
 
 /* Estilos del copyleft */
 
-.copyleftdiv {
+.copyleft-div {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -168,31 +172,26 @@ section {
     transform: rotate(180deg);
 }
 
-#personajes div.dentroinstrucciones {
+#personajes div.dentro-instrucciones {
     position: absolute;
     top: -900px;
 }
 
-#personajes.current, #personajes.dentroinstrucciones {
-    width: 80%;
-    margin: 5px auto;
-}
-
-.pantallamenu .titulo {
+.pantalla-menu .titulo {
     margin: 20px 20px;
     font-size: 1.5em;
     font-weight: 300;
 }
 
-.pantallamenu .imagenes img {
+.pantalla-menu .imagenes img {
     margin: 0px 10px;
 }
 
-.pantallamenu .descripcion b {
+.pantalla-menu .descripcion b {
     color: #223e65;
 }
 
-.pantallamenu .imagenesdirecciones {
+.pantalla-menu .imagenes-direcciones {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -207,7 +206,7 @@ section {
     margin: 0px !important;
 }
 
-#luisderecha {
+#luis-derecha {
     background-image: url("Assets/luis_derecha.png");
     height: 64px;
     width: 57px;
@@ -218,7 +217,7 @@ section {
     -o-animation: caminaderecha 1s steps(4) infinite;
 }
 
-.flechaderecha {
+.flecha-derecha {
     background-image: url("Assets/flecha_derecha.png");
     height: 64px;
     width: 64px;
@@ -238,13 +237,13 @@ section {
     margin: 0px !important;
 }
 
-.flechaizquierda {
+.flecha-izquierda {
     background-image: url("Assets/flecha_izquierda.png");
     height: 64px;
     width: 64px;
 }
 
-#luisizquierda {
+#luis-izquierda {
     background-image: url("Assets/luis_izquierda.png");
     height: 64px;
     width: 57px;
@@ -263,7 +262,7 @@ section {
     cursor: none;
 }
 
-#puntajeinfo {
+#puntaje-info {
     position: absolute;
     width: 100%;
     padding: 5px 0;
@@ -276,18 +275,22 @@ section {
     color: #fff;
 }
 
+/* Estilos de los output pertenecientes al puntaje */
+
 #dulzura output, #puntaje output {
     right: 20px;
 }
+
+/* Medidas del Canvas */
 
 canvas {
     width: 100%;
     height: 100%;
 }
 
-/* Acompaña a función "cambiaBackground" en script.js */
+/* Acompaña a función "cambia-background" en script.js */
 
-#cambiabackground {
+#cambia-background {
     background-image: url("Assets/1.png");
     background-size: cover;
     transition: 1s ease-in-out;
@@ -301,6 +304,8 @@ canvas {
     -ms-transition: 1s ease-in-out;
 }
 
+/* Mensaje del Juego Terminado */
+
 .mensaje {
     font-size: 1.6em;
     font-weight: 300;
@@ -310,39 +315,39 @@ canvas {
 /* @media responsiva: para pantallas de tamaño standard (width: 480px) de celulares y tablets */
 
 @media (max-width: 480px) {
-    .pantallamenu {
+    .pantalla-menu {
         margin-top: 20px;
     }
-    .pantallamenu div {
+    .pantalla-menu div {
         margin-top: 5px;
     }
-    .pantallamenu .audiodiv {
+    .pantalla-menu .audio-div {
         padding-right: 25px;
         margin: 0px !important;
     }
-    .pantallamenu .audiodiv img {
+    .pantalla-menu .audio-div img {
         width: 45px;
         height: 45px;
     }
-    .pantallamenu .grantitulo span {
+    .pantalla-menu .gran-titulo span {
         font-size: 2.2em;
     }
-    .pantallamenu .grantitulo p {
+    .pantalla-menu .gran-titulo p {
         font-size: 1em;
     }
-    .pantallamenu .puntaje {
+    .pantalla-menu .puntaje {
         margin: 5px 20px;
         padding: 5px;
         font-size: 1.2em;
     }
-    .pantallamenu .puntaje .espaciado {
+    .pantalla-menu .puntaje .espaciado {
         margin-right: 0px;
     }
-    .pantallamenu .descripcion {
+    .pantalla-menu .descripcion {
         font-size: 0.9em;
         margin: 0px 10px 5px;
     }
-    .pantallamenu .botones button {
+    .pantalla-menu .botones button {
         width: 300px;
         margin-bottom: 10px;
         font-size: 1.1em;
