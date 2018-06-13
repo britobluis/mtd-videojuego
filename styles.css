@@ -138,9 +138,15 @@ section {
 
 /* Estilos del copyleft */
 
+.copyleftdiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
 #copyleft {
     height: 100%;
-    width: 100%;
+    width: 330px;
 }
 
 #copyleft .color {
@@ -308,7 +314,7 @@ canvas {
         margin-top: 20px;
     }
     .pantallamenu div {
-        margin-top: 15px;
+        margin-top: 5px;
     }
     .pantallamenu .audiodiv {
         padding-right: 25px;
@@ -334,7 +340,7 @@ canvas {
     }
     .pantallamenu .descripcion {
         font-size: 0.9em;
-        margin: 0px 5px;
+        margin: 0px 10px 5px;
     }
     .pantallamenu .botones button {
         width: 300px;
