@@ -14,7 +14,7 @@
         canvas = $('canvas'),
         terminado = $('#juegoterminado'),
         msjjuegoterminado = terminado.querySelector('.mensaje'),
-        personajes = document.querySelectorAll('div.dentrointrucciones'),
+        personajes = document.querySelectorAll('div.dentroinstrucciones'),
         ctx = canvas.getContext('2d'),
         startenergy = +muestraDulzura.innerHTML;
 
@@ -148,7 +148,7 @@
         if (t.className === 'proximo') {
             instruccionesSiguiente();
         }
-        if (t.className === 'endinstructions') {
+        if (t.className === 'fininstrucciones') {
             instruccionesListo();
         }
         if (t.id === 'botoninstrucciones') {
@@ -229,7 +229,7 @@
     */
 
     function instruccionesListo() {
-        personajes[now].className = 'dentrointrucciones';
+        personajes[now].className = 'dentroinstrucciones';
         now = 0;
         showintro();
     }
@@ -243,7 +243,7 @@
             now = now + 1;
         }
         if (personajes[now]) {
-            personajes[now - 1].className = 'dentrointrucciones';
+            personajes[now - 1].className = 'dentroinstrucciones';
             personajes[now].className = 'current';
         }
     }
